@@ -1,0 +1,148 @@
+<resources>
+    <string name="app_name">Headset Control Plus</string>
+    <string name="app_intro"> </string>
+    <string name="app_description">
+        Control your music player using your single-button headset control
+    </string>
+
+    <string name="pref_title_hcp_status">
+        Headset Control Plus Status
+    </string>
+    <string name="pref_status_enabled_hcp">
+        ENABLED
+    </string>
+    <string name="pref_status_disabled_hcp">
+        DISABLED. Tap here to open Accesibility settings.
+    </string>
+    <string name="pref_title_hcp_mode">
+        Headset Mode
+    </string>
+
+    <!--Settings Sections-->
+    <string name="pref_title_service">
+        Service
+    </string>
+    <string name="pref_title_gestures">
+        Headset Gestures
+    </string>
+    <string name="pref_title_application">
+        Application
+    </string>
+    <string name="pref_title_version">
+        Version
+    </string>
+    <string name="pref_title_contribute">
+        Contribute
+    </string>
+
+    <string name="pref_title_contribute_details">
+        Join the Headset Control Plus project on Github
+    </string>
+
+    <!--Headset Button Modes-->
+    <string name="pref_hcp_mode_single">
+        Single Button Headset
+    </string>
+    <string name="pref_hcp_mode_multi">
+        Three Button Headset
+    </string>
+
+    <!--Headset Gestures-->
+    <string name="pref_button_gestures_single_press">
+        Single Press
+    </string>
+    <string name="pref_button_gestures_double_press">
+        Double Press
+    </string>
+    <string name="pref_button_gestures_triple_press">
+        Triple Press
+    </string>
+    <string name="pref_button_gestures_long_press">
+        Long Press
+    </string>
+
+    <!--Media Actions-->
+    <string name="pref_button_actions_default">
+        System Default
+    </string>
+    <string name="pref_button_actions_playpause">
+        Play/Pause
+    </string>
+    <string name="pref_button_actions_next">
+        Next Track
+    </string>
+    <string name="pref_button_actions_previous">
+        Previous Track
+    </string>
+    <string name="pref_button_actions_volume_up">
+        Volume Up
+    </string>
+    <string name="pref_button_actions_volume_down">
+        Volume Down
+    </string>
+    <string name="pref_button_actions_volume_mute">
+        Volume Mute
+    </string>
+
+
+    <!--Intro Screen-->
+    <string name="intro_title_welcome">
+        On Your Marks...
+    </string>
+    <string name="intro_details_welcome">
+        Welcome to Headset Control Plus. Unlease the power of your Headset button by supporting gesture like:
+        Long Press, Double Press, Triple Press etc.
+    </string>
+
+    <string name="intro_title_permissions">
+        Get Set...
+    </string>
+    <string name="intro_details_permissions">
+        In order for the app to work, It needs your permission to run an as Accesibility service.
+        Please click "Open Accessibility", locate "Headset Control Plus" and enable the service.
+    </string>
+    <string name="btn_open_accessibility">Open Accessibility</string>
+    <string name="err_require_access">Headset Control Plus Accessibility Service must be enabled first</string>
+    <string name="err_require_headset_success">Your headset must pass the above test</string>
+    <string name="success_require_access">Success! Service enabled</string>
+    <string name="status_service_enabled">Accessibility Service is Enabled</string>
+    <string name="status_headset_setup_waiting">Waiting...</string>
+    <string name="status_headset_setup_trouble">Having Trouble? Tap here for Help</string>
+    <string name="status_headset_setup_success">Success! Enjoy Headset Control Plus</string>
+
+    <string name="intro_title_setup">
+        Go!!
+    </string>
+    <string name="intro_details_setup">
+        Awesome! Now let\'s setup your Headset.
+        Connect your headset to the phone and press the headset button to continue.
+    </string>
+
+    <!--Arrays-->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="pref_hcp_mode_values">
+        <item>0</item>
+        <!--
+        <item>1</item>
+        -->
+    </string-array>
+    <string-array name="pref_hcp_button_mode">
+        <item>Single Button Headset</item>
+        <!--
+        <item>Three Button Headset</item>
+        -->
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="pref_media_actions">
+        <item>System Default</item>
+        <item>Play/Pause</item>
+        <item>Next Track</item>
+        <item>Previous Track</item>
+        <item>Volume Up</item>
+        <item>Volume Down</item>
+        <item>Volume Mute</item>
+    </string-array>
+
+
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/intro_slide_layout_setup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/introPermissions"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="60dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="@string/intro_title_setup"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="@string/intro_details_setup"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/txt_status"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/status_headset_setup_waiting"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/holo_green_light" />
+
+</LinearLayout>

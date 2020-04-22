@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <PreferenceCategory
+        android:title="@string/pref_title_service"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:key="enable_hcp"
+            android:title="@string/pref_title_hcp_status"
+            android:summary="@string/pref_status_disabled_hcp"
+            app:iconSpaceReserved="false">
+        <intent android:action="android.settings.ACCESSIBILITY_SETTINGS" />
+        </Preference>
+
+        <ListPreference
+            android:defaultValue="@string/pref_hcp_mode_single"
+            android:entries="@array/pref_hcp_button_mode"
+            android:entryValues="@array/pref_hcp_mode_values"
+            android:key="hcp_mode"
+            android:summary="@string/pref_hcp_mode_single"
+            android:title="@string/pref_title_hcp_mode"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_title_gestures"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:defaultValue="@string/pref_button_actions_playpause"
+            android:entries="@array/pref_media_actions"
+            android:entryValues="@array/pref_media_actions"
+            android:key="hcp_gestures_single_press"
+            android:summary="@string/pref_button_actions_default"
+            android:title="@string/pref_button_gestures_single_press"
+            app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:defaultValue="@string/pref_button_actions_next"
+            android:entries="@array/pref_media_actions"
+            android:entryValues="@array/pref_media_actions"
+            android:key="hcp_gestures_double_press"
+            android:summary="@string/pref_button_actions_next"
+            android:title="@string/pref_button_gestures_double_press"
+            app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:defaultValue="@string/pref_button_actions_previous"
+            android:entries="@array/pref_media_actions"
+            android:entryValues="@array/pref_media_actions"
+            android:key="hcp_gestures_long_press"
+            android:summary="@string/pref_button_actions_previous"
+            android:title="@string/pref_button_gestures_long_press"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_title_application"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:key="about_hcp"
+            android:summary="0.1.0"
+            android:title="@string/pref_title_version"
+            app:iconSpaceReserved="false" ></Preference>
+        <Preference
+            android:key="contribute_hcp"
+            android:title="@string/pref_title_contribute"
+            android:summary="@string/pref_title_contribute_details"
+            app:iconSpaceReserved="false" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/nadchif/headset-control-plus"
+                />
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>
