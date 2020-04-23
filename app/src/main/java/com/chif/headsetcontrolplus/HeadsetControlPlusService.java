@@ -1,7 +1,6 @@
 package com.chif.headsetcontrolplus;
 
 import android.accessibilityservice.AccessibilityService;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -17,7 +16,6 @@ import androidx.preference.PreferenceManager;
 public class HeadsetControlPlusService extends AccessibilityService {
     private static final String APP_TAG = "HeadsetControlPlus";
     private AudioManager audioManager;
-
     String actionsDefault;
     String actionsPlayPause;
     String actionsNext;

@@ -10,7 +10,7 @@
         <Preference
             android:key="enable_hcp"
             android:title="@string/pref_title_hcp_status"
-            android:summary="@string/pref_status_disabled_hcp"
+            android:summary="@string/pref_status_blank_hcp"
             app:iconSpaceReserved="false">
         <intent android:action="android.settings.ACCESSIBILITY_SETTINGS" />
         </Preference>
@@ -74,6 +74,15 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/nadchif/headset-control-plus"
+                />
+        </Preference>
+        <Preference
+            android:key="contribute_hcp"
+            android:title="@string/pref_title_privacy"
+            app:iconSpaceReserved="false" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/nadchif/headset-control-plus/blob/master/PRIVACY.md"
                 />
         </Preference>
     </PreferenceCategory>

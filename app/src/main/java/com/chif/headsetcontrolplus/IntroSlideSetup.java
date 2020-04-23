@@ -33,6 +33,7 @@ import com.github.paolorotolo.appintro.ISlidePolicy;
 public class IntroSlideSetup extends Fragment implements ISlidePolicy {
 
     private static final String APP_TAG = "HeadsetControlPlus";
+    private final String troubleShootUrl = "https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md";
     private Button statusMessage;
     private boolean signalReceived = false;
     BroadcastReceiver br;
@@ -41,16 +42,11 @@ public class IntroSlideSetup extends Fragment implements ISlidePolicy {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_intro_slide_setup, container, false);
 
-
-
         statusMessage = (Button) view.findViewById(R.id.txt_status);
         statusMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity().getPackageName());
-                getActivity().sendBroadcast(intent);
-
-                Log.e(APP_TAG, ("Broadcast Key "));
+                getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(troubleShootUrl)));
             }
         });
         br = new BroadcastReceiver() {

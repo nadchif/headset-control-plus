@@ -14,6 +14,9 @@
     <string name="pref_status_disabled_hcp">
         DISABLED. Tap here to open Accesibility settings.
     </string>
+    <string name="pref_status_blank_hcp">
+
+    </string>
     <string name="pref_title_hcp_mode">
         Headset Mode
     </string>
@@ -33,6 +36,9 @@
     </string>
     <string name="pref_title_contribute">
         Contribute
+    </string>
+    <string name="pref_title_privacy">
+        Privacy Policy
     </string>
 
     <string name="pref_title_contribute_details">

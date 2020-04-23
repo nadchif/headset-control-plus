@@ -2,7 +2,6 @@ package com.chif.headsetcontrolplus;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -12,7 +11,6 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 
 import androidx.preference.Preference;
-
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -43,6 +41,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
     };
 
+    /*
+     * Updates the summary of each preference, to match newly set value
+     */
     private static void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
@@ -52,12 +53,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 preference,
                 PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
     }
+
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         setAccessibilityServiceText();
     }
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.main_preferences, rootKey);
@@ -67,17 +69,27 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         bindPreferenceSummaryToValue(findPreference("hcp_gestures_double_press"));
         setAccessibilityServiceText();
     }
+
+    /*
+     * Updates the status in the settings page
+     */
     private void setAccessibilityServiceText() {
         Preference enableHCP = findPreference("enable_hcp");
         Spannable summary;
         if (isAccessibilityServiceEnabled(getActivity(), HeadsetControlPlusService.class)) {
-            enableHCP.setSummary(getString(R.string.pref_status_enabled_hcp));
+            summary = new SpannableString(getString(R.string.pref_status_enabled_hcp));
+            summary.setSpan(new ForegroundColorSpan(Color.parseColor("#6ab04c")), 0, summary.length(), 0);
+            enableHCP.setSummary(summary);
         } else {
             summary = new SpannableString(getString(R.string.pref_status_disabled_hcp));
-            summary.setSpan(new ForegroundColorSpan(Color.RED), 0, summary.length(), 0);
+            summary.setSpan(new ForegroundColorSpan(Color.parseColor("#f0932b")), 0, summary.length(), 0);
             enableHCP.setSummary(summary);
         }
     }
+
+    /*
+     * Checks if the Accessibility Service is enabled. Returns true if it is
+     */
     private static boolean isAccessibilityServiceEnabled(Context context, Class<?> accessibilityService) {
         ComponentName expectedComponentName = new ComponentName(context, accessibilityService);
 
@@ -97,6 +109,4 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
         return false;
     }
-
-
 }
