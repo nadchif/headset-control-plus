@@ -1,7 +1,6 @@
 package com.chif.headsetcontrolplus;
 
 import android.accessibilityservice.AccessibilityService;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -17,7 +16,6 @@ import androidx.preference.PreferenceManager;
 public class HeadsetControlPlusService extends AccessibilityService {
     private static final String APP_TAG = "HeadsetControlPlus";
     private AudioManager audioManager;
-
     String actionsDefault;
     String actionsPlayPause;
     String actionsNext;
@@ -43,13 +41,14 @@ public class HeadsetControlPlusService extends AccessibilityService {
         actionsVolumeUp = getString(R.string.pref_button_actions_volume_up);
         actionsVolumeDown = getString(R.string.pref_button_actions_volume_down);
         actionsVolumeMute = getString(R.string.pref_button_actions_volume_mute);
-        Log.e(APP_TAG, "Service COnnected");
+        Log.i(APP_TAG, "Service COnnected");
     }
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
     }
+
     @Override
     public boolean onKeyEvent(KeyEvent event) {
         int keycode = event.getKeyCode();
@@ -61,13 +60,13 @@ public class HeadsetControlPlusService extends AccessibilityService {
 
         if (keycode != KeyEvent.KEYCODE_HEADSETHOOK) {
             // Not interested in any other keys
-            Log.e(APP_TAG, "Ignored " + keycode);
+            Log.i(APP_TAG, "Ignored " + keycode);
             return false;
         }
 
         // allow simulated keyEvents from this service to go through
-        if(isSimulation){
-            isSimulation = false;
+        if (isSimulation) {
+            isSimulation = false; // reset simulation mode for next event
             return false;
         }
 
@@ -94,14 +93,14 @@ public class HeadsetControlPlusService extends AccessibilityService {
         */
 
         // Long Press
-        if(action == KeyEvent.ACTION_DOWN) {
+        if (action == KeyEvent.ACTION_DOWN) {
             mLongPressed = new Runnable() {
                 public void run() {
                     gestureMode = "long_press";
                     Log.i(APP_TAG, "Exec Long Press Action");
-                    if(longPressAction.equals(actionsDefault)){
+                    if (longPressAction.equals(actionsDefault)) {
                         simulateLongPress();
-                    }else {
+                    } else {
                         execAction(longPressAction);
                     }
                 }
@@ -111,7 +110,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
         }
 
         //Single and Double Click
-        if(action == KeyEvent.ACTION_UP) {
+        if (action == KeyEvent.ACTION_UP) {
             d++;
             handler.removeCallbacks(mLongPressed);
             mSinglePressed = new Runnable() {
@@ -119,7 +118,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
                     // single press
                     if (d == 1) {
                         //check if this keyup event is not following a long press event
-                        if(gestureMode != "long_press") {
+                        if (gestureMode != "long_press") {
                             Log.i(APP_TAG, "Exec Single Press Action");
                             if (singlePressAction.equals(actionsDefault)) {
                                 // simulate the original event;
@@ -132,7 +131,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
                     }
                     // double press
                     if (d == 2) {
-                        if(gestureMode != "long_press") {
+                        if (gestureMode != "long_press") {
                             Log.i(APP_TAG, "Exec Double Press Action");
                             if (doublePressAction.equals(actionsDefault)) {
                                 // simulate the original event;
@@ -156,28 +155,30 @@ public class HeadsetControlPlusService extends AccessibilityService {
     @Override
     public void onInterrupt() {
     }
-    private void execAction(String action){
+
+    private void execAction(String action) {
         isPlaying = audioManager.isMusicActive();
-        if(action.equals(actionsPlayPause)){
+        if (action.equals(actionsPlayPause)) {
             playPause();
         }
-        if(action.equals(actionsNext)){
+        if (action.equals(actionsNext)) {
             nextTrack();
         }
-        if(action.equals(actionsPrevious)){
+        if (action.equals(actionsPrevious)) {
             previousTrack();
         }
-        if(action.equals(actionsVolumeDown)){
+        if (action.equals(actionsVolumeDown)) {
             decreaseVolume();
         }
-        if(action.equals(actionsVolumeUp)){
+        if (action.equals(actionsVolumeUp)) {
             increaseVolume();
         }
-        if(action.equals(actionsVolumeMute)){
+        if (action.equals(actionsVolumeMute)) {
             muteVolume();
         }
     }
-    private void simulateSinglePress(){
+
+    private void simulateSinglePress() {
         isSimulation = true; // set to true each time, to allow it go through and be handled by system
         long eventtime = SystemClock.uptimeMillis();
         KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_HEADSETHOOK, 0);
@@ -187,9 +188,10 @@ public class HeadsetControlPlusService extends AccessibilityService {
         KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_HEADSETHOOK, 0);
         audioManager.dispatchMediaKeyEvent(upEvent);
 
-        Log.e(APP_TAG, "simulated single press");
+        Log.i(APP_TAG, "simulated single press");
     }
-    private void simulateDoublePress(){
+
+    private void simulateDoublePress() {
 
         isSimulation = true; // set to true each time, to allow it go through and be handled by system
         long eventtime = SystemClock.uptimeMillis();
@@ -208,10 +210,11 @@ public class HeadsetControlPlusService extends AccessibilityService {
         KeyEvent upEvent2 = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_HEADSETHOOK, 0);
         audioManager.dispatchMediaKeyEvent(upEvent2);
 
-        Log.e(APP_TAG, "simulated double press");
+        Log.i(APP_TAG, "simulated double press");
 
     }
-    private void simulateLongPress(){
+
+    private void simulateLongPress() {
         isSimulation = true; // set to true each time, to allow it go through and be handled by system
 
         audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_HEADSETHOOK));
@@ -223,10 +226,9 @@ public class HeadsetControlPlusService extends AccessibilityService {
         //schedule keyup event after longpress timeout
         handler.postDelayed(mLongPressed, ViewConfiguration.get(this).getLongPressTimeout());
 
-        Log.e(APP_TAG, "simulated long press");
-
-
+        Log.i(APP_TAG, "simulated long press");
     }
+
     private void playPause() {
         long eventtime = SystemClock.uptimeMillis();
 
@@ -238,26 +240,29 @@ public class HeadsetControlPlusService extends AccessibilityService {
 
         Log.i(APP_TAG, "Play Pause");
     }
+
     private void nextTrack() {
         long eventtime = SystemClock.uptimeMillis();
         KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_NEXT, 0);
         audioManager.dispatchMediaKeyEvent(downEvent);
-        if(isPlaying) {
+        if (isPlaying) {
             KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PLAY, 0);
             audioManager.dispatchMediaKeyEvent(upEvent);
         }
         Log.i(APP_TAG, "Next Track");
     }
+
     private void previousTrack() {
         long eventtime = SystemClock.uptimeMillis();
         KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PREVIOUS, 0);
         audioManager.dispatchMediaKeyEvent(downEvent);
-        if(isPlaying) {
+        if (isPlaying) {
             KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PLAY, 0);
             audioManager.dispatchMediaKeyEvent(upEvent);
         }
         Log.i(APP_TAG, "Prev Track");
     }
+
     private void increaseVolume() {
         audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
         Log.i(APP_TAG, "Inc Vol");

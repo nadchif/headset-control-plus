@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/status_service_enabled"
-        android:textColor="@android:color/holo_green_light"
+        android:textColor="@color/successGreen"
         android:textSize="18sp"
         android:visibility="gone" />
 
