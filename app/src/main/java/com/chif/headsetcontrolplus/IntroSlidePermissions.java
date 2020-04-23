@@ -1,5 +1,8 @@
+/*
+ * IntroSlidePermissions.java
+ * Explains to the user the permissions the app will require. In this case its just accessibility
+ */
 package com.chif.headsetcontrolplus;
-
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -54,7 +57,6 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
         View view = inflater.inflate(R.layout.fragment_intro_slide_permissions, container, false);
 
         layoutContainer = (LinearLayout) view.findViewById(R.id.intro_slide_layout_permissions);
-
         launchSettingsBtn = (Button) view.findViewById(R.id.btn_settings);
         successMessage = (TextView) view.findViewById(R.id.txt_success);
 
@@ -114,7 +116,6 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
         while (colonSplitter.hasNext()) {
             String componentNameString = colonSplitter.next();
             ComponentName enabledService = ComponentName.unflattenFromString(componentNameString);
-
             if (enabledService != null && enabledService.equals(expectedComponentName))
                 return true;
         }

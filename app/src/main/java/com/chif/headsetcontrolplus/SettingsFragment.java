@@ -1,3 +1,7 @@
+/*
+ * SettingsFragment.java
+ * Houses the preferences that are shown on the main activity.
+ */
 package com.chif.headsetcontrolplus;
 
 import android.content.ComponentName;
