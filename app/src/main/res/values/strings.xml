@@ -90,7 +90,6 @@
         Volume Mute
     </string>
 
-
     <!--Intro Screen-->
     <string name="intro_title_welcome">
         On Your Marks...
@@ -107,14 +106,22 @@
         In order for the app to work, It needs your permission to run an as Accesibility service.
         Please click "Open Accessibility", locate "Headset Control Plus" and enable the service.
     </string>
-    <string name="btn_open_accessibility">Open Accessibility</string>
-    <string name="err_require_access">Headset Control Plus Accessibility Service must be enabled first</string>
-    <string name="err_require_headset_success">Your headset must pass the above test</string>
-    <string name="success_require_access">Success! Service enabled</string>
-    <string name="status_service_enabled">Accessibility Service is Enabled</string>
-    <string name="status_headset_setup_waiting">Waiting...</string>
-    <string name="status_headset_setup_trouble">Having Trouble? Tap here for Help</string>
-    <string name="status_headset_setup_success">Success! Enjoy Headset Control Plus</string>
+    <string name="btn_open_accessibility">
+        Open Accessibility</string>
+    <string name="err_require_access">
+        Headset Control Plus Accessibility Service must be enabled first</string>
+    <string name="err_require_headset_success">
+        Your headset must pass the above test</string>
+    <string name="success_require_access">
+        Success! Service enabled</string>
+    <string name="status_service_enabled">
+        Accessibility Service is Enabled</string>
+    <string name="status_headset_setup_waiting">
+        Waiting...</string>
+    <string name="status_headset_setup_trouble">
+        Having Trouble? Tap here for Help</string>
+    <string name="status_headset_setup_success">
+        Success! Enjoy Headset Control Plus</string>
 
     <string name="intro_title_setup">
         Go!!
@@ -125,7 +132,6 @@
     </string>
 
     <!--Arrays-->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="pref_hcp_mode_values">
         <item>0</item>
         <!--
@@ -139,7 +145,7 @@
         -->
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Media Actions -->
     <string-array name="pref_media_actions">
         <item>System Default</item>
         <item>Play/Pause</item>
@@ -149,6 +155,5 @@
         <item>Volume Down</item>
         <item>Volume Mute</item>
     </string-array>
-
 
 </resources>
