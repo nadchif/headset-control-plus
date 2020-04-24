@@ -9,6 +9,13 @@ Unleash the power of your Headset button by supporting gesture like: Long Press,
 ### What it does
 Headset Control Plus allows you to map certain phone actions to respond to gestures from your Headset buttons.
 
+### Why choose HCP?
+
+* Lightweight (~800-900kb)
+* You can modify and improve it :-)
+* No ADs
+* Absolutely FREE!
+
 ##### Gestures Currently Supported:
 * Single Press
 * Long Press
@@ -32,18 +39,20 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 * Take photo
 * Speak current time
 
+3rd Party App Actions like*:
+* Strava (Start recording/Pause Recording/Stop)
+* Water Reminder (Record drink)
+
+\* Possibly. Still under consideration
+
 ##### Types of Headset Supported:
 * Single Button
 
 ###### Upcoming Headset Support:
 * Triple Button (with Volume Up and Volume Down buttons capable of custom gestures)
 
-### Why choose HCP?
-
-* Lightweight (~800-900kb)
-* You can modify and improve it :-)
-* No ADs
-* Absolutely FREE!
+##### Known limitations:
+* The gestures may not work when the screen is off.
 
 ### License
 Apache-2.0
