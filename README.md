@@ -4,7 +4,7 @@ Unleash the power of your Headset button by supporting gesture like: Long Press,
 
 ----
 
-[image]
+![image](https://raw.githubusercontent.com/nadchif/headset-control-plus/master/extra/Screenshot1_small.jpg)
 
 [View on Google Play](#)
 
