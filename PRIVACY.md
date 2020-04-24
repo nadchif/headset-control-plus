@@ -1,10 +1,14 @@
 **What personal information do we collect from the people that visit our app?**
 
-When ordering or registering on our site, as appropriate, you may be asked to enter your name, email address, mailing address, phone number or other details to help you with your experience.
+~When ordering or registering on our site, as appropriate, you may be asked to enter your name, email address, mailing address, phone number or other details to help you with your experience.~
+
+None.
 
 **When do we collect information?**
 
-We collect information from you when you register on our site, place an order, subscribe to a service, fill out a form or enter information on our site.
+~We collect information from you when you register on our site, place an order, subscribe to a service, fill out a form or enter information on our site.~
+
+None.
 
 **How do we use your information?**
 
@@ -44,4 +48,4 @@ However, non-personally identifiable visitor information may be provided to othe
 
 **Third-party links**
 
-Occasionally, at our discretion, we may include or offer third-party products or services on our website. These third-party sites have separate and independent privacy policies. We therefore have no responsibility or liability for the content and activities of these linked sites. Nonetheless, we seek to protect the integrity of our site and welcome any feedback about these sites.
+Occasionally, at our discretion, we may include or offer third-party products or services within the app. These third-party sites have separate and independent privacy policies. We therefore have no responsibility or liability for the content and activities of these linked sites. Nonetheless, we seek to protect the integrity of our site and welcome any feedback about these sites.
