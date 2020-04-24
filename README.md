@@ -16,7 +16,7 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 * No ADs
 * Absolutely FREE!
 
-##### Gestures Currently Supported:
+#### Gestures Currently Supported:
 * Single Press
 * Long Press
 * Double Press
@@ -24,7 +24,7 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 ###### Upcoming Gestures:
 * Triple Press
 
-##### Actions Currently Supported:
+#### Actions Currently Supported:
 * Increase Volume
 * Decrease Volume
 * Mute 
@@ -39,19 +39,19 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 * Take photo
 * Speak current time
 
-3rd Party App Actions like*:
+###### 3rd Party App Actions*:
 * Strava (Start recording/Pause Recording/Stop)
 * Water Reminder (Record drink)
 
 \* Possibly. Still under consideration
 
-##### Types of Headset Supported:
+#### Types of Headset Supported:
 * Single Button
 
 ###### Upcoming Headset Support:
 * Triple Button (with Volume Up and Volume Down buttons capable of custom gestures)
 
-##### Known limitations:
+#### Known limitations:
 * The gestures may not work when the screen is off.
 
 ### License
