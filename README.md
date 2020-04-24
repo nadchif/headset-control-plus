@@ -28,8 +28,9 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 
 ###### Upcoming Actions
 * Do Nothing
-* Launch App (Of user's choice)
-* Take Photo
+* Launch App (of user's choice)
+* Take photo
+* Speak current time
 
 ##### Types of Headset Supported:
 * Single Button
