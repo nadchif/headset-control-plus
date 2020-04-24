@@ -2,8 +2,6 @@ Headset Control Plus
 ====
 Unleash the power of your Headset button by supporting gesture like: Long Press, Double Press, Triple Press etc.
 
-----
-
 ![image](https://raw.githubusercontent.com/nadchif/headset-control-plus/master/extra/Screenshot1_small.jpg)
 
 [View on Google Play](#)
