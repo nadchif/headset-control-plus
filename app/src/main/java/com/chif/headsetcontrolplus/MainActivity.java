@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         /* Check if Intro slider already ran, if not launch it */
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         if (!sp.getBoolean("first", false)) {
-            Intent intent = new Intent(this, IntroActivity.class); // Call the AppIntro java class
+            Intent intent = new Intent(this, IntroActivity.class); 
             startActivity(intent);
         }
     }

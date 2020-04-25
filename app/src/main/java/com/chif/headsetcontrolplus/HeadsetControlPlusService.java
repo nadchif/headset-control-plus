@@ -1,3 +1,23 @@
+/*
+ * HeadsetControlPlusService.java
+ *
+ *
+ * Copyright 2020 github.com/nadchif
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+
 package com.chif.headsetcontrolplus;
 
 import android.accessibilityservice.AccessibilityService;
@@ -10,12 +30,19 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.Toast;
 
 import androidx.preference.PreferenceManager;
 
+import com.chif.headsetcontrolplus.providers.FlashlightProvider;
+import com.chif.headsetcontrolplus.providers.StravaProvider;
+
 public class HeadsetControlPlusService extends AccessibilityService {
-    private static final String APP_TAG = "HeadsetControlPlus";
+    private static final String APP_TAG = HeadsetControlPlusService.class.getSimpleName();
     private AudioManager audioManager;
+    private FlashlightProvider flashlightProvider;
+    private StravaProvider stravaProvider;
+
     String actionsDefault;
     String actionsPlayPause;
     String actionsNext;
@@ -23,6 +50,9 @@ public class HeadsetControlPlusService extends AccessibilityService {
     String actionsVolumeUp;
     String actionsVolumeDown;
     String actionsVolumeMute;
+    String actionsFlashlightToggle;
+    String actionsStravaToggle;
+
     String gestureMode = "unknown";
     boolean isPlaying = false;
     boolean isSimulation = false;
@@ -41,6 +71,10 @@ public class HeadsetControlPlusService extends AccessibilityService {
         actionsVolumeUp = getString(R.string.pref_button_actions_volume_up);
         actionsVolumeDown = getString(R.string.pref_button_actions_volume_down);
         actionsVolumeMute = getString(R.string.pref_button_actions_volume_mute);
+        actionsFlashlightToggle = getString(R.string.pref_button_actions_flashlight_toggle);
+        actionsStravaToggle = getString(R.string.pref_button_actions_strava_toggle);
+        flashlightProvider = new FlashlightProvider(this);
+        stravaProvider = new StravaProvider(this);
         Log.i(APP_TAG, "Service COnnected");
     }
 
@@ -83,14 +117,6 @@ public class HeadsetControlPlusService extends AccessibilityService {
                 actionsNext);
         final String longPressAction = pref.getString("hcp_gestures_long_press",
                 actionsPrevious);
-
-        /*
-        Note: It is important that key events are handled in such a way that the event
-        stream that would be passed to the rest of the system is well-formed. For example,
-        handling the down event but not the up event and vice versa would generate an
-        inconsistent event stream.
-        source: https://developer.android.com/reference/android/accessibilityservice/AccessibilityService#onKeyEvent(android.view.KeyEvent)
-        */
 
         // Long Press
         if (action == KeyEvent.ACTION_DOWN) {
@@ -160,21 +186,35 @@ public class HeadsetControlPlusService extends AccessibilityService {
         isPlaying = audioManager.isMusicActive();
         if (action.equals(actionsPlayPause)) {
             playPause();
+            return;
         }
         if (action.equals(actionsNext)) {
             nextTrack();
+            return;
         }
         if (action.equals(actionsPrevious)) {
             previousTrack();
+            return;
         }
         if (action.equals(actionsVolumeDown)) {
             decreaseVolume();
+            return;
         }
         if (action.equals(actionsVolumeUp)) {
             increaseVolume();
+            return;
         }
         if (action.equals(actionsVolumeMute)) {
             muteVolume();
+            return;
+        }
+        if (action.equals(actionsFlashlightToggle)) {
+            toggleFlashlight();
+            return;
+        }
+        if (action.equals(actionsStravaToggle)) {
+            toggleStrava();
+            return;
         }
     }
 
@@ -274,7 +314,17 @@ public class HeadsetControlPlusService extends AccessibilityService {
     }
 
     private void muteVolume() {
-        Log.i(APP_TAG, "Mut Vol");
         audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, AudioManager.FLAG_SHOW_UI);
+        Log.i(APP_TAG, "Mut Vol");
+    }
+
+    private void toggleFlashlight() {
+        flashlightProvider.toggleFlashLight();
+        Log.i(APP_TAG, "Toggle Flashlight");
+    }
+
+    private void toggleStrava() {
+        stravaProvider.toggleRecord();
+        Log.i(APP_TAG, "Toggle Strava");
     }
 }
