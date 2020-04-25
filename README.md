@@ -44,7 +44,7 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 ###### 3rd Party App Actions*:
 * Water Reminder (Record drink)
 
-\* Possibly. Still under consideration
+<sup>\* Possibly. Still under consideration</sup>
 
 #### Types of Headset Supported:
 * Single Button
