@@ -5,6 +5,10 @@
         Control your music player using your single-button headset control
     </string>
 
+    <!--Permission Strings-->
+    <string name="perm_label_flashlight">Flashlight LABEL</string>
+    <string name="perm_desc_flashlight">Flashlight DESCRIPTION</string>
+
     <string name="pref_title_hcp_status">
         Headset Control Plus Status
     </string>
@@ -46,12 +50,8 @@
     </string>
 
     <!--Headset Button Modes-->
-    <string name="pref_hcp_mode_single">
-        Single Button Headset
-    </string>
-    <string name="pref_hcp_mode_multi">
-        Three Button Headset
-    </string>
+    <string name="pref_hcp_mode_single">Single Button Headset</string>
+    <string name="pref_hcp_mode_multi">Three Button Headset</string>
 
     <!--Headset Gestures-->
     <string name="pref_button_gestures_single_press">
@@ -67,28 +67,18 @@
         Long Press
     </string>
 
+    <!--System Actions-->
+    <string name="pref_button_actions_default">System Default</string>
+    <string name="pref_button_actions_flashlight_toggle">Flashlight On/Off</string>
     <!--Media Actions-->
-    <string name="pref_button_actions_default">
-        System Default
-    </string>
-    <string name="pref_button_actions_playpause">
-        Play/Pause
-    </string>
-    <string name="pref_button_actions_next">
-        Next Track
-    </string>
-    <string name="pref_button_actions_previous">
-        Previous Track
-    </string>
-    <string name="pref_button_actions_volume_up">
-        Volume Up
-    </string>
-    <string name="pref_button_actions_volume_down">
-        Volume Down
-    </string>
-    <string name="pref_button_actions_volume_mute">
-        Volume Mute
-    </string>
+    <string name="pref_button_actions_playpause">Play/Pause</string>
+    <string name="pref_button_actions_next">Next Track</string>
+    <string name="pref_button_actions_previous">Previous Track</string>
+    <string name="pref_button_actions_volume_up">Volume Up</string>
+    <string name="pref_button_actions_volume_down">Volume Down</string>
+    <string name="pref_button_actions_volume_mute">Volume Mute</string>
+    <!--3rd Party App Actions-->
+    <string name="pref_button_actions_strava_toggle">Strava Start/Stop</string>
 
     <!--Intro Screen-->
     <string name="intro_title_welcome">
@@ -96,7 +86,7 @@
     </string>
     <string name="intro_details_welcome">
         Welcome to Headset Control Plus. Unlease the power of your Headset button by supporting gesture like:
-        Long Press, Double Press, Triple Press etc.
+        Long Press, Double Press, Triple Press etc.\n\nThis app does not gather or send any information from your device. For more information view our Privacy Policy.
     </string>
 
     <string name="intro_title_permissions">
@@ -154,6 +144,8 @@
         <item>Volume Up</item>
         <item>Volume Down</item>
         <item>Volume Mute</item>
+        <item>Flashlight On/Off</item>
+        <item>Strava Start/Stop</item>
     </string-array>
 
 </resources>
