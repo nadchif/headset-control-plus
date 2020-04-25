@@ -59,7 +59,7 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 Apache-2.0
 
 ### Contribution
-Contributions and suggestions are very welcome and wanted. I try to respond to pull requests within 48 hours. For more information see [CONTRIBUTING.md](#)
+Contributions and suggestions are very welcome and wanted. I try to respond to pull requests within 48 hours. For more information see [CONTRIBUTING.md](https://github.com/nadchif/headset-control-plus/blob/master/CONTRIBUTING.md)
 
 ### Documentation
 See [DOCUMENTATION.md](#) for instructions on how to install and How to use this app
