@@ -31,6 +31,8 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 * Play/Pause
 * Next Track
 * Previous Track
+* Toggle Flashlight
+* Strava (Start/Stop Recording)
 * Use System Default
 
 ###### Upcoming Actions
@@ -38,10 +40,8 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 * Launch App (of user's choice)
 * Take photo
 * Speak current time
-* Toggle Flashlight
 
 ###### 3rd Party App Actions*:
-* Strava (Start recording/Pause Recording/Stop)
 * Water Reminder (Record drink)
 
 \* Possibly. Still under consideration
