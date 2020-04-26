@@ -27,11 +27,10 @@ import com.github.paolorotolo.appintro.ISlidePolicy;
 
 
 public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
-  private LinearLayout layoutContainer;
-  private Button launchSettingsBtn;
-  private TextView successMessage;
+  private Button mLaunchSettingsBtn;
+  private TextView mSuccessMessage;
 
-  ContentObserver observer = new ContentObserver(new Handler(Looper.getMainLooper())) {
+  ContentObserver mObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
     @Override
     public void onChange(boolean selfChange) {
       super.onChange(selfChange);
@@ -40,13 +39,13 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
       if (accessibilityServiceEnabled) {
         Toast.makeText(getContext(), getString(R.string.success_require_access),
                 Toast.LENGTH_SHORT).show();
-        launchSettingsBtn.setVisibility(View.GONE);
-        successMessage.setVisibility(View.VISIBLE);
+        mLaunchSettingsBtn.setVisibility(View.GONE);
+        mSuccessMessage.setVisibility(View.VISIBLE);
       } else {
         Toast.makeText(getContext(), getString(R.string.err_require_access),
                 Toast.LENGTH_SHORT).show();
-        successMessage.setVisibility(View.GONE);
-        launchSettingsBtn.setVisibility(View.VISIBLE);
+        mSuccessMessage.setVisibility(View.GONE);
+        mLaunchSettingsBtn.setVisibility(View.VISIBLE);
       }
     }
   };
@@ -55,26 +54,24 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_intro_slide_permissions, container, false);
-
-    layoutContainer = view.findViewById(R.id.intro_slide_layout_permissions);
-    launchSettingsBtn = view.findViewById(R.id.btn_settings);
-    successMessage = view.findViewById(R.id.txt_success);
+    mLaunchSettingsBtn = view.findViewById(R.id.btn_settings);
+    mSuccessMessage = view.findViewById(R.id.txt_success);
 
     boolean serviceEnabled = isAccessibilityServiceEnabled(getActivity(),
             HeadsetControlPlusService.class);
     if (serviceEnabled) {
       Toast.makeText(getContext(), getString(R.string.success_require_access),
               Toast.LENGTH_SHORT).show();
-      launchSettingsBtn.setVisibility(View.GONE);
-      successMessage.setVisibility(View.VISIBLE);
+      mLaunchSettingsBtn.setVisibility(View.GONE);
+      mSuccessMessage.setVisibility(View.VISIBLE);
     } else {
       Toast.makeText(getContext(), getString(R.string.err_require_access),
               Toast.LENGTH_SHORT).show();
-      successMessage.setVisibility(View.GONE);
-      launchSettingsBtn.setVisibility(View.VISIBLE);
+      mSuccessMessage.setVisibility(View.GONE);
+      mLaunchSettingsBtn.setVisibility(View.VISIBLE);
     }
 
-    launchSettingsBtn.setOnClickListener(new View.OnClickListener() {
+    mLaunchSettingsBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -83,14 +80,14 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
     });
 
     Uri uri = Settings.Secure.getUriFor(Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-    getActivity().getContentResolver().registerContentObserver(uri, false, observer);
+    getActivity().getContentResolver().registerContentObserver(uri, false, mObserver);
 
     return view;
   }
 
   @Override
   public void onDestroyView() {
-    getActivity().getContentResolver().unregisterContentObserver(observer);
+    getActivity().getContentResolver().unregisterContentObserver(mObserver);
     super.onDestroyView();
   }
 

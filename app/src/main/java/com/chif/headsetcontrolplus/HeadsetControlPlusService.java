@@ -36,40 +36,41 @@ import com.chif.headsetcontrolplus.providers.StravaProvider;
 
 public class HeadsetControlPlusService extends AccessibilityService {
   private static final String APP_TAG = HeadsetControlPlusService.class.getSimpleName();
-  static int d = 0;
-  final Handler handler = new Handler();
-  private static String actionsDefault;
-  private static String actionsPlayPause;
-  private static String actionsNext;
-  private static String actionsPrevious;
-  private static String actionsVolumeUp;
-  private static String actionsVolumeDown;
-  private static String actionsVolumeMute;
-  private static String actionsFlashlightToggle;
-  private static String actionsStravaToggle;
-  private String gestureMode = "unknown";
+  private static int sKeyDownCount = 0;
+  private static String sActionsDefault;
+  private static String sActionsPlayPause;
+  private static String sActionsNext;
+  private static String sActionsPrevious;
+  private static String sActionsVolumeUp;
+  private static String sActionsVolumeDown;
+  private static String sActionsVolumeMute;
+  private static String sActionsFlashlightToggle;
+  private static String sActionsStravaToggle;
+  private static AudioManager sAudioManager;
   private static boolean isPlaying = false;
-  private boolean isSimulation = false;
-  private Runnable gestureLongPressed;
-  private Runnable gestureSinglePressed;
-  private AudioManager audioManager;
-  private FlashlightProvider flashlightProvider;
-  private StravaProvider stravaProvider;
+
+  final Handler mHandler = new Handler();
+  private String mGestureMode = "unknown";
+  private boolean mIsSimulation = false;
+  private Runnable mGestureLongPressed;
+  private Runnable mGestureSinglePressed;
+  private FlashlightProvider mFlashlightProvider;
+  private StravaProvider mStravaProvider;
 
   @Override
   protected void onServiceConnected() {
-    audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-    actionsDefault = getString(R.string.pref_button_actions_default);
-    actionsPlayPause = getString(R.string.pref_button_actions_playpause);
-    actionsNext = getString(R.string.pref_button_actions_next);
-    actionsPrevious = getString(R.string.pref_button_actions_previous);
-    actionsVolumeUp = getString(R.string.pref_button_actions_volume_up);
-    actionsVolumeDown = getString(R.string.pref_button_actions_volume_down);
-    actionsVolumeMute = getString(R.string.pref_button_actions_volume_mute);
-    actionsFlashlightToggle = getString(R.string.pref_button_actions_flashlight_toggle);
-    actionsStravaToggle = getString(R.string.pref_button_actions_strava_toggle);
-    flashlightProvider = new FlashlightProvider(this);
-    stravaProvider = new StravaProvider(this);
+    sAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+    sActionsDefault = getString(R.string.pref_button_actions_default);
+    sActionsPlayPause = getString(R.string.pref_button_actions_playpause);
+    sActionsNext = getString(R.string.pref_button_actions_next);
+    sActionsPrevious = getString(R.string.pref_button_actions_previous);
+    sActionsVolumeUp = getString(R.string.pref_button_actions_volume_up);
+    sActionsVolumeDown = getString(R.string.pref_button_actions_volume_down);
+    sActionsVolumeMute = getString(R.string.pref_button_actions_volume_mute);
+    sActionsFlashlightToggle = getString(R.string.pref_button_actions_flashlight_toggle);
+    sActionsStravaToggle = getString(R.string.pref_button_actions_strava_toggle);
+    mFlashlightProvider = new FlashlightProvider(this);
+    mStravaProvider = new StravaProvider(this);
     Log.i(APP_TAG, "Service COnnected");
   }
 
@@ -94,8 +95,8 @@ public class HeadsetControlPlusService extends AccessibilityService {
     }
 
     // allow simulated keyEvents from this service to go through
-    if (isSimulation) {
-      isSimulation = false; // reset simulation mode for next event
+    if (mIsSimulation) {
+      mIsSimulation = false; // reset simulation mode for next event
       return false;
     }
 
@@ -107,19 +108,19 @@ public class HeadsetControlPlusService extends AccessibilityService {
 
 
     final String singlePressAction = pref.getString("hcp_gestures_single_press",
-            actionsPlayPause);
+            sActionsPlayPause);
     final String doublePressAction = pref.getString("hcp_gestures_double_press",
-            actionsNext);
+            sActionsNext);
     final String longPressAction = pref.getString("hcp_gestures_long_press",
-            actionsPrevious);
+            sActionsPrevious);
 
     // Long Press
     if (action == KeyEvent.ACTION_DOWN) {
-      gestureLongPressed = new Runnable() {
+      mGestureLongPressed = new Runnable() {
         public void run() {
-          gestureMode = "long_press";
+          mGestureMode = "long_press";
           Log.i(APP_TAG, "Exec Long Press Action");
-          if (longPressAction.equals(actionsDefault)) {
+          if (longPressAction.equals(sActionsDefault)) {
             simulateLongPress();
           } else {
             execAction(longPressAction);
@@ -128,47 +129,47 @@ public class HeadsetControlPlusService extends AccessibilityService {
       };
       // start tracking long press. If no action up is detected after 1100ms,
       // consider ut as long press
-      handler.postDelayed(gestureLongPressed, 1100);
+      mHandler.postDelayed(mGestureLongPressed, 1100);
     }
 
     //Single and Double Click
     if (action == KeyEvent.ACTION_UP) {
-      d++;
-      handler.removeCallbacks(gestureLongPressed);
-      gestureSinglePressed = new Runnable() {
+      sKeyDownCount++;
+      mHandler.removeCallbacks(mGestureLongPressed);
+      mGestureSinglePressed = new Runnable() {
         public void run() {
           // single press
-          if (d == 1) {
+          if (sKeyDownCount == 1) {
             //check if this keyup event is not following a long press event
-            if (gestureMode != "long_press") {
+            if (mGestureMode != "long_press") {
               Log.i(APP_TAG, "Exec Single Press Action");
-              if (singlePressAction.equals(actionsDefault)) {
+              if (singlePressAction.equals(sActionsDefault)) {
                 // simulate the original event;
                 simulateSinglePress();
               } else {
                 execAction(singlePressAction);
               }
             }
-            gestureMode = "unknown";
+            mGestureMode = "unknown";
           }
           // double press
-          if (d == 2) {
-            if (gestureMode != "long_press") {
+          if (sKeyDownCount == 2) {
+            if (mGestureMode != "long_press") {
               Log.i(APP_TAG, "Exec Double Press Action");
-              if (doublePressAction.equals(actionsDefault)) {
+              if (doublePressAction.equals(sActionsDefault)) {
                 // simulate the original event;
                 simulateDoublePress();
               } else {
                 execAction(doublePressAction);
               }
             }
-            gestureMode = "unknown";
+            mGestureMode = "unknown";
           }
-          d = 0;
+          sKeyDownCount = 0;
         }
       };
-      if (d == 1) {
-        handler.postDelayed(gestureSinglePressed, 400);
+      if (sKeyDownCount == 1) {
+        mHandler.postDelayed(mGestureSinglePressed, 400);
       }
     }
     return true;
@@ -179,96 +180,96 @@ public class HeadsetControlPlusService extends AccessibilityService {
   }
 
   private void execAction(String action) {
-    isPlaying = audioManager.isMusicActive();
-    if (action.equals(actionsPlayPause)) {
+    isPlaying = sAudioManager.isMusicActive();
+    if (action.equals(sActionsPlayPause)) {
       playPause();
       return;
     }
-    if (action.equals(actionsNext)) {
+    if (action.equals(sActionsNext)) {
       nextTrack();
       return;
     }
-    if (action.equals(actionsPrevious)) {
+    if (action.equals(sActionsPrevious)) {
       previousTrack();
       return;
     }
-    if (action.equals(actionsVolumeDown)) {
+    if (action.equals(sActionsVolumeDown)) {
       decreaseVolume();
       return;
     }
-    if (action.equals(actionsVolumeUp)) {
+    if (action.equals(sActionsVolumeUp)) {
       increaseVolume();
       return;
     }
-    if (action.equals(actionsVolumeMute)) {
+    if (action.equals(sActionsVolumeMute)) {
       muteVolume();
       return;
     }
-    if (action.equals(actionsFlashlightToggle)) {
+    if (action.equals(sActionsFlashlightToggle)) {
       toggleFlashlight();
       return;
     }
-    if (action.equals(actionsStravaToggle)) {
+    if (action.equals(sActionsStravaToggle)) {
       toggleStrava();
       return;
     }
   }
 
   private void simulateSinglePress() {
-    isSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
     long eventtime = SystemClock.uptimeMillis();
     KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
-    audioManager.dispatchMediaKeyEvent(downEvent);
+    sAudioManager.dispatchMediaKeyEvent(downEvent);
 
-    isSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
     KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
-    audioManager.dispatchMediaKeyEvent(upEvent);
+    sAudioManager.dispatchMediaKeyEvent(upEvent);
 
     Log.i(APP_TAG, "simulated single press");
   }
 
   private void simulateDoublePress() {
 
-    isSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
     long eventtime = SystemClock.uptimeMillis();
     KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
-    audioManager.dispatchMediaKeyEvent(downEvent);
+    sAudioManager.dispatchMediaKeyEvent(downEvent);
 
-    isSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
     KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
-    audioManager.dispatchMediaKeyEvent(upEvent);
+    sAudioManager.dispatchMediaKeyEvent(upEvent);
 
-    isSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
     KeyEvent downEvent2 = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
-    audioManager.dispatchMediaKeyEvent(downEvent2);
+    sAudioManager.dispatchMediaKeyEvent(downEvent2);
 
-    isSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
     KeyEvent upEvent2 = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
-    audioManager.dispatchMediaKeyEvent(upEvent2);
+    sAudioManager.dispatchMediaKeyEvent(upEvent2);
 
     Log.i(APP_TAG, "simulated double press");
 
   }
 
   private void simulateLongPress() {
-    isSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
 
-    audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,
+    sAudioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_HEADSETHOOK));
-    gestureLongPressed = new Runnable() {
+    mGestureLongPressed = new Runnable() {
       public void run() {
-        audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,
+        sAudioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,
                 KeyEvent.KEYCODE_HEADSETHOOK));
       }
     };
     //schedule keyup event after longpress timeout
-    handler.postDelayed(gestureLongPressed, ViewConfiguration.get(this).getLongPressTimeout());
+    mHandler.postDelayed(mGestureLongPressed, ViewConfiguration.get(this).getLongPressTimeout());
 
     Log.i(APP_TAG, "simulated long press");
   }
@@ -278,11 +279,11 @@ public class HeadsetControlPlusService extends AccessibilityService {
 
     KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, 0);
-    audioManager.dispatchMediaKeyEvent(downEvent);
+    sAudioManager.dispatchMediaKeyEvent(downEvent);
 
     KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
             KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, 0);
-    audioManager.dispatchMediaKeyEvent(upEvent);
+    sAudioManager.dispatchMediaKeyEvent(upEvent);
 
     Log.i(APP_TAG, "Play Pause");
   }
@@ -291,11 +292,11 @@ public class HeadsetControlPlusService extends AccessibilityService {
     long eventtime = SystemClock.uptimeMillis();
     KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_MEDIA_NEXT, 0);
-    audioManager.dispatchMediaKeyEvent(downEvent);
+    sAudioManager.dispatchMediaKeyEvent(downEvent);
     if (isPlaying) {
       KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
               KeyEvent.KEYCODE_MEDIA_PLAY, 0);
-      audioManager.dispatchMediaKeyEvent(upEvent);
+      sAudioManager.dispatchMediaKeyEvent(upEvent);
     }
     Log.i(APP_TAG, "Next Track");
   }
@@ -304,40 +305,40 @@ public class HeadsetControlPlusService extends AccessibilityService {
     long eventtime = SystemClock.uptimeMillis();
     KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_MEDIA_PREVIOUS, 0);
-    audioManager.dispatchMediaKeyEvent(downEvent);
+    sAudioManager.dispatchMediaKeyEvent(downEvent);
     if (isPlaying) {
       KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
               KeyEvent.KEYCODE_MEDIA_PLAY, 0);
-      audioManager.dispatchMediaKeyEvent(upEvent);
+      sAudioManager.dispatchMediaKeyEvent(upEvent);
     }
     Log.i(APP_TAG, "Prev Track");
   }
 
   private void increaseVolume() {
-    audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE,
+    sAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE,
             AudioManager.FLAG_SHOW_UI);
     Log.i(APP_TAG, "Inc Vol");
   }
 
   private void decreaseVolume() {
-    audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER,
+    sAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER,
             AudioManager.FLAG_SHOW_UI);
     Log.i(APP_TAG, "Dec Vol");
   }
 
   private void muteVolume() {
-    audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE,
+    sAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE,
             AudioManager.FLAG_SHOW_UI);
     Log.i(APP_TAG, "Mut Vol");
   }
 
   private void toggleFlashlight() {
-    flashlightProvider.toggleFlashLight();
+    mFlashlightProvider.toggleFlashLight();
     Log.i(APP_TAG, "Toggle Flashlight");
   }
 
   private void toggleStrava() {
-    stravaProvider.toggleRecord();
+    mStravaProvider.toggleRecord();
     Log.i(APP_TAG, "Toggle Strava");
   }
 }

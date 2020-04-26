@@ -13,14 +13,14 @@ import androidx.annotation.NonNull;
 
 public class FlashlightProvider {
   private static final String APP_TAG = FlashlightProvider.class.getSimpleName();
-  private static boolean isFlashlightOn = false;
+  private static boolean sIsFlashlightOn = false;
   private CameraManager camManager;
   private Context context;
   private static CameraManager.TorchCallback torchCallback = new CameraManager.TorchCallback() {
     @Override
     public void onTorchModeChanged(@NonNull String cameraId, boolean enabled) {
       super.onTorchModeChanged(cameraId, enabled);
-      isFlashlightOn = enabled;
+      sIsFlashlightOn = enabled;
     }
   };
 
@@ -47,7 +47,7 @@ public class FlashlightProvider {
    * Turns flashlight on or off
    */
   public void toggleFlashLight() {
-    if (!isFlashlightOn) {
+    if (!sIsFlashlightOn) {
       turnFlashlightOn();
       Log.i(APP_TAG, "Flashlight On");
       return;

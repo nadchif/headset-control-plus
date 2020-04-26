@@ -24,40 +24,41 @@ import com.github.paolorotolo.appintro.ISlidePolicy;
 public class IntroSlideSetup extends Fragment implements ISlidePolicy {
 
   private static final String APP_TAG = "HeadsetControlPlus";
-  private final String troubleShootUrl = "https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md";
-  private Button statusMessage;
-  private boolean signalReceived = false;
-  BroadcastReceiver br;
+  private static final String mTroubleShootUrl = "https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md";
+  private Button mStatusMessageBtn;
+  private boolean mSignalReceived = false;
+  BroadcastReceiver mBroadcastReceiver;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_intro_slide_setup, container, false);
 
-    statusMessage = view.findViewById(R.id.txt_status);
-    statusMessage.setOnClickListener(new View.OnClickListener() {
+    mStatusMessageBtn = view.findViewById(R.id.txt_status);
+    mStatusMessageBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(troubleShootUrl)));
+        getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mTroubleShootUrl)));
       }
     });
-    br = new BroadcastReceiver() {
+    mBroadcastReceiver = new BroadcastReceiver() {
       @Override
       public void onReceive(Context context, Intent intent) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = sp.edit();
-        statusMessage.setText(R.string.status_headset_setup_success);
-        signalReceived = true;
+        mStatusMessageBtn.setText(R.string.status_headset_setup_success);
+        mSignalReceived = true;
         editor.putBoolean("first", true);
         editor.apply();
         // unregister the broadcast receiver after first successful reception
-        getActivity().unregisterReceiver(br);
+        getActivity().unregisterReceiver(mBroadcastReceiver);
       }
     };
 
     // this receiver will wait to hear from the accessibility service that
     // the headset button has worked
-    getActivity().registerReceiver(br, new IntentFilter(getActivity().getPackageName()));
+    getActivity().registerReceiver(mBroadcastReceiver,
+            new IntentFilter(getActivity().getPackageName()));
     return view;
   }
 
@@ -69,12 +70,12 @@ public class IntroSlideSetup extends Fragment implements ISlidePolicy {
   @Override
   public boolean isPolicyRespected() {
     //check if signal is received. if false is returned, user cannot advance to next slide
-    return signalReceived;
+    return mSignalReceived;
   }
 
   @Override
   public void onUserIllegallyRequestedNextPage() {
-    statusMessage.setText(R.string.status_headset_setup_trouble);
+    mStatusMessageBtn.setText(R.string.status_headset_setup_trouble);
     Toast.makeText(getContext(), getString(R.string.err_require_headset_success),
             Toast.LENGTH_SHORT).show();
   }
