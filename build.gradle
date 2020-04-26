@@ -20,6 +20,23 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
     }
+    apply plugin: 'checkstyle'
+    checkstyle {
+        toolVersion = '8.31'
+    }
+    task checkstyle(type: Checkstyle) {
+        // rules.xml copy from:
+        // https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-8.31/src/main/resources/google_checks.xml
+        // the version should be as same as plugin version
+        configFile new File(rootDir, "config/checkstyle/google_checks.xml")
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
+        exclude '**/R.java'
+        exclude '**/BuildConfig.java'
+        classpath = files()
+    }
+
 }
 
 task clean(type: Delete) {

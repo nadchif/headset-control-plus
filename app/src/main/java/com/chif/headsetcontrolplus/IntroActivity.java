@@ -1,37 +1,38 @@
 /*
  * IntroActivity.java
- * Starts the introduction slider that will inform the user about the settings and test the headset button
+ * Starts the introduction slider that will inform the user about the settings
+ * and test the headset button
  */
+
 package com.chif.headsetcontrolplus;
 
+import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.os.Bundle;
-
 import com.github.paolorotolo.appintro.AppIntro2;
 
 public class IntroActivity extends AppIntro2 {
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        // add welcome slide
-        addSlide(new IntroSlideWelcome());
+    // add welcome slide
+    addSlide(new IntroSlideWelcome());
 
-        // add accessibility permissions slide
-        addSlide(new IntroSlidePermissions());
+    // add accessibility permissions slide
+    addSlide(new IntroSlidePermissions());
 
-        // add headset setup slide
-        addSlide(new IntroSlideSetup());
+    // add headset setup slide
+    addSlide(new IntroSlideSetup());
 
-        // Hide Skip/Done button.
-        showSkipButton(false);
-    }
+    // Hide Skip/Done button.
+    showSkipButton(false);
+  }
 
-    @Override
-    public void onDonePressed(Fragment currentFragment) {
-        super.onDonePressed(currentFragment);
-        finish();
-    }
+  @Override
+  public void onDonePressed(Fragment currentFragment) {
+    super.onDonePressed(currentFragment);
+    finish();
+  }
 
 }
