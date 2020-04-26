@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 public class FlashlightProvider {
   private static final String APP_TAG = FlashlightProvider.class.getSimpleName();
   private static boolean isFlashlightOn = false;
+  private CameraManager camManager;
+  private Context context;
   private static CameraManager.TorchCallback torchCallback = new CameraManager.TorchCallback() {
     @Override
     public void onTorchModeChanged(@NonNull String cameraId, boolean enabled) {
@@ -21,9 +23,10 @@ public class FlashlightProvider {
       isFlashlightOn = enabled;
     }
   };
-  private CameraManager camManager;
-  private Context context;
 
+  /** Flashlight Provider.
+   * handles interactions between Camera/Flashlight and the app
+   */
   public FlashlightProvider(Context context) {
     this.context = context;
     registerCallback();

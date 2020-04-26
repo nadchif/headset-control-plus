@@ -9,10 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+
 public class StravaProvider {
 
   private Context context;
 
+  /** Strava Provider.
+   * Handles interactions between Strava and the app
+   */
   public StravaProvider(Context context) {
     this.context = context;
   }
