@@ -13,7 +13,9 @@ Check the following:
 
 1. The headset button actually works
 
-2. Headset Control Plus is enabled as an [Accessibility Service](https://www.verizonwireless.com/support/knowledge-base-215346/). 
+2. Headset Control Plus is enabled as an [Accessibility Service](https://www.techbone.net/android/user-manual/accessibility-menu#android_9). 
+      
+      See: [How to get to Accessibility Settings](https://www.techbone.net/android/user-manual/accessibility-menu#android_9)
 
 If this is still not working [click here](https://github.com/nadchif/headset-control-plus/issues/new?assignees=&labels=bug&template=bug_report.md&title=) to bring the issue to our attention
 
