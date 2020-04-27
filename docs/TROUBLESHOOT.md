@@ -1,8 +1,8 @@
 Troubleshoot - Headset Control Plus
 ====
 
-* [The app does not detect my headset](#)
-* [The app does not work when the screen is off](#)
+* [The app does not detect my headset](https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md#the-app-does-not-detect-my-headset)
+* [The app does not work when the screen is off](https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md#the-app-does-not-work-when-the-screen-is-off)
 * [I'm experiencing another issue](https://github.com/nadchif/headset-control-plus/issues/new?assignees=&labels=bug&template=bug_report.md&title=)
 
 ## The app does not detect my headset
