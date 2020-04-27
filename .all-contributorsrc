@@ -15,6 +15,15 @@
         "maintenance",
         "test"
       ]
+    },
+    {
+      "login": "CyberianDeath",
+      "name": "CyberianDeath",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/60200739?v=4",
+      "profile": "https://github.com/CyberianDeath",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
