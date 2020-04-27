@@ -50,12 +50,12 @@ public class IntroSlideSetup extends Fragment implements ISlidePolicy {
         mSignalReceived = true;
         editor.putBoolean("first", true);
         editor.apply();
-        // unregister the broadcast receiver after first successful reception
+        // Unregister the broadcast receiver after first successful reception
         getActivity().unregisterReceiver(mBroadcastReceiver);
       }
     };
 
-    // this receiver will wait to hear from the accessibility service that
+    // This receiver will wait to hear from the accessibility service that,
     // the headset button has worked
     getActivity().registerReceiver(mBroadcastReceiver,
             new IntentFilter(getActivity().getPackageName()));
@@ -69,7 +69,7 @@ public class IntroSlideSetup extends Fragment implements ISlidePolicy {
 
   @Override
   public boolean isPolicyRespected() {
-    //check if signal is received. if false is returned, user cannot advance to next slide
+    // Check if signal is received. If false is returned, user cannot advance to next slide
     return mSignalReceived;
   }
 
