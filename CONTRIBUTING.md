@@ -20,6 +20,18 @@ Contributions and suggestions are very welcome and wanted. I try to respond to p
 3. Make the fix or add feature to the code.
 
 4. Run tests to make sure there are no lint or build errors
+ 	
+	```
+	gradlew checkstyle
+	```
+	and
+	```
+	gradlew lint
+	```
+	and
+	```
+	gradlew test
+	```
 
 5. Sync your fork to make sure you have the latest changes.
  	
