@@ -2,9 +2,17 @@ Headset Control Plus
 ====
 Unleash the power of your Headset button by supporting gesture like: Long Press, Double Press, Triple Press etc.
 
-![image](https://raw.githubusercontent.com/nadchif/headset-control-plus/master/extra/Screenshot1_small.jpg)
+<details>
+  <summary>
+    View screenshot(s)
+  </summary>
+  
+  ![image](https://raw.githubusercontent.com/nadchif/headset-control-plus/master/extra/Screenshot1_small.jpg)
+  
+</details>
 
-[View on Google Play](#)
+
+[View on Google Play](https://play.google.com/store/apps/details?id=com.chif.headsetcontrolplus)
 
 ### What it does
 Headset Control Plus allows you to map certain phone actions to respond to gestures from your Headset buttons.
