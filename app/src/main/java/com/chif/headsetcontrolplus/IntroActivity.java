@@ -16,16 +16,16 @@ public class IntroActivity extends AppIntro2 {
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // add welcome slide
+    // Add welcome slide
     addSlide(new IntroSlideWelcome());
 
-    // add accessibility permissions slide
+    // Add accessibility permissions slide
     addSlide(new IntroSlidePermissions());
 
-    // add headset setup slide
+    // Add headset setup slide
     addSlide(new IntroSlideSetup());
 
-    // Hide Skip/Done button.
+    // Hide Skip/Done button
     showSkipButton(false);
   }
 
