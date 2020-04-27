@@ -63,7 +63,7 @@
         app:iconSpaceReserved="false">
         <Preference
             android:key="about_hcp"
-            android:summary="0.1.0"
+            android:summary="0.1.3"
             android:title="@string/pref_title_version"
             app:iconSpaceReserved="false" ></Preference>
         <Preference

@@ -88,7 +88,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
       return false;
     }
 
-    if (keycode != KeyEvent.KEYCODE_HEADSETHOOK) {
+    if (keycode != KeyEvent.KEYCODE_HEADSETHOOK && keycode != KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
       // Not interested in any other keys
       Log.i(APP_TAG, "Ignored " + keycode);
       return false;
