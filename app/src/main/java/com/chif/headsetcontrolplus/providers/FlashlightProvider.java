@@ -1,6 +1,6 @@
 /*
  * FlashlightProvider.java
- * handles interactions between Camera/Flashlight and the app
+ * Handles interactions between Camera/Flashlight and the app.
  */
 
 package com.chif.headsetcontrolplus.providers;
@@ -25,7 +25,7 @@ public class FlashlightProvider {
   };
 
   /** Flashlight Provider.
-   * handles interactions between Camera/Flashlight and the app
+   * Handles interactions between Camera/Flashlight and the app.
    */
   public FlashlightProvider(Context context) {
     this.mContext = context;
@@ -44,7 +44,7 @@ public class FlashlightProvider {
   */
 
   /** Toggles Flashlight.
-   * Turns flashlight on or off
+   * Turns Flashlight on or off.
    */
   public void toggleFlashLight() {
     if (!sIsFlashlightOn) {
