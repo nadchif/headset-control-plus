@@ -12,13 +12,13 @@ import android.net.Uri;
 
 public class StravaProvider {
 
-  private Context context;
+  private Context mContext;
 
   /** Strava Provider.
    * Handles interactions between Strava and the app
    */
   public StravaProvider(Context context) {
-    this.context = context;
+    this.mContext = context;
   }
 
   /** Toggle Record.
@@ -28,6 +28,6 @@ public class StravaProvider {
     Intent intent = new Intent(Intent.ACTION_RUN);
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     intent.setData(Uri.parse("http://strava.com/nfc/record/toggle"));
-    context.startActivity(intent);
+    mContext.startActivity(intent);
   }
 }
