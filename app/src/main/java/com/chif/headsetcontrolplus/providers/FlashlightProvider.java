@@ -14,8 +14,8 @@ import androidx.annotation.NonNull;
 public class FlashlightProvider {
   private static final String APP_TAG = FlashlightProvider.class.getSimpleName();
   private static boolean sIsFlashlightOn = false;
-  private CameraManager camManager;
-  private Context context;
+  private CameraManager mCamManager;
+  private Context mContext;
   private static CameraManager.TorchCallback torchCallback = new CameraManager.TorchCallback() {
     @Override
     public void onTorchModeChanged(@NonNull String cameraId, boolean enabled) {
@@ -28,18 +28,18 @@ public class FlashlightProvider {
    * handles interactions between Camera/Flashlight and the app
    */
   public FlashlightProvider(Context context) {
-    this.context = context;
+    this.mContext = context;
     registerCallback();
   }
 
   private void registerCallback() {
-    camManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
-    camManager.registerTorchCallback(torchCallback, null);// (callback, handler)
+    mCamManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+    mCamManager.registerTorchCallback(torchCallback, null);// (callback, handler)
   }
 
   /*
   public void finalize() {
-    camManager.unregisterTorchCallback(torchCallback);// (callback, handler)
+    mCamManager.unregisterTorchCallback(torchCallback);// (callback, handler)
   }
   */
 
@@ -58,11 +58,11 @@ public class FlashlightProvider {
 
   private void turnFlashlightOn() {
     try {
-      camManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
+      mCamManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
       String cameraId = null;
-      if (camManager != null) {
-        cameraId = camManager.getCameraIdList()[0];
-        camManager.setTorchMode(cameraId, true);
+      if (mCamManager != null) {
+        cameraId = mCamManager.getCameraIdList()[0];
+        mCamManager.setTorchMode(cameraId, true);
       }
     } catch (CameraAccessException e) {
       Log.e(APP_TAG, e.toString());
@@ -72,10 +72,10 @@ public class FlashlightProvider {
   private void turnFlashlightOff() {
     try {
       String cameraId;
-      camManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
-      if (camManager != null) {
-        cameraId = camManager.getCameraIdList()[0]; // Usually front camera is at 0 position.
-        camManager.setTorchMode(cameraId, false);
+      mCamManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+      if (mCamManager != null) {
+        cameraId = mCamManager.getCameraIdList()[0]; // Usually front camera is at 0 position.
+        mCamManager.setTorchMode(cameraId, false);
       }
     } catch (CameraAccessException e) {
       e.printStackTrace();
