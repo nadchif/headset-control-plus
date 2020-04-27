@@ -1,8 +1,8 @@
 Headset Control Plus
+====
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-====
 ![Android CI - Build](https://github.com/nadchif/headset-control-plus/workflows/Android%20CI%20-%20Build/badge.svg)
 [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
 
