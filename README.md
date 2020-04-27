@@ -1,10 +1,22 @@
 Headset Control Plus
 ====
+![Android CI - Build](https://github.com/nadchif/headset-control-plus/workflows/Android%20CI%20-%20Build/badge.svg)
+[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
+
 Unleash the power of your Headset button by supporting gesture like: Long Press, Double Press, Triple Press etc.
 
-![image](https://raw.githubusercontent.com/nadchif/headset-control-plus/master/extra/Screenshot1_small.jpg)
+<!-- markdownlint-disable -->
+<a href='https://play.google.com/store/apps/details?id=com.chif.headsetcontrolplus&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="64"/></a>
+<!-- markdownlint-enable -->
 
-[View on Google Play](#)
+<details>
+  <summary>
+    View screenshot(s)
+  </summary>
+  
+  ![image](https://raw.githubusercontent.com/nadchif/headset-control-plus/master/extra/Screenshot1_small.jpg)
+  
+</details>
 
 ### What it does
 Headset Control Plus allows you to map certain phone actions to respond to gestures from your Headset buttons.
