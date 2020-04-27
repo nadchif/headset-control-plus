@@ -1,5 +1,8 @@
 Headset Control Plus
 ====
+![Android CI - Build](https://github.com/nadchif/headset-control-plus/workflows/Android%20CI%20-%20Build/badge.svg)
+[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
+
 Unleash the power of your Headset button by supporting gesture like: Long Press, Double Press, Triple Press etc.
 
 <!-- markdownlint-disable -->
