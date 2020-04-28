@@ -12,7 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
-/.gitignore
+/.idea
 
 # Built application files
 *.apk
