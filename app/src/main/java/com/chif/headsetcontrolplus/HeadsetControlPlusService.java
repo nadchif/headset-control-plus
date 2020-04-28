@@ -71,7 +71,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
     sActionsStravaToggle = getString(R.string.pref_button_actions_strava_toggle);
     mFlashlightProvider = new FlashlightProvider(this);
     mStravaProvider = new StravaProvider(this);
-    Log.i(APP_TAG, "Service COnnected");
+    Log.i(APP_TAG, "Service Connected");
   }
 
   @Override
@@ -94,9 +94,9 @@ public class HeadsetControlPlusService extends AccessibilityService {
       return false;
     }
 
-    // allow simulated keyEvents from this service to go through
+    // Allow simulated keyEvents from this service to go through.
     if (mIsSimulation) {
-      mIsSimulation = false; // reset simulation mode for next event
+      mIsSimulation = false; // Reset simulation mode for next event.
       return false;
     }
 
@@ -114,7 +114,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
     final String longPressAction = pref.getString("hcp_gestures_long_press",
             sActionsPrevious);
 
-    // Long Press
+    // Long Press.
     if (action == KeyEvent.ACTION_DOWN) {
       mGestureLongPressed = new Runnable() {
         public void run() {
@@ -127,24 +127,24 @@ public class HeadsetControlPlusService extends AccessibilityService {
           }
         }
       };
-      // start tracking long press. If no action up is detected after 1100ms,
-      // consider ut as long press
+      // Start tracking long press. If no action up is detected after 1100ms,
+      // consider ut as long press.
       mHandler.postDelayed(mGestureLongPressed, 1100);
     }
 
-    //Single and Double Click
+    // Single and Double Click.
     if (action == KeyEvent.ACTION_UP) {
       sKeyDownCount++;
       mHandler.removeCallbacks(mGestureLongPressed);
       mGestureSinglePressed = new Runnable() {
         public void run() {
-          // single press
+          // Single press.
           if (sKeyDownCount == 1) {
-            //check if this keyup event is not following a long press event
+            // Check if this keyup event is not following a long press event.
             if (mGestureMode != "long_press") {
               Log.i(APP_TAG, "Exec Single Press Action");
               if (singlePressAction.equals(sActionsDefault)) {
-                // simulate the original event;
+                // Simulate the original event.
                 simulateSinglePress();
               } else {
                 execAction(singlePressAction);
@@ -152,12 +152,12 @@ public class HeadsetControlPlusService extends AccessibilityService {
             }
             mGestureMode = "unknown";
           }
-          // double press
+          // Double press.
           if (sKeyDownCount == 2) {
             if (mGestureMode != "long_press") {
               Log.i(APP_TAG, "Exec Double Press Action");
               if (doublePressAction.equals(sActionsDefault)) {
-                // simulate the original event;
+                // Simulate the original event.
                 simulateDoublePress();
               } else {
                 execAction(doublePressAction);
@@ -216,13 +216,13 @@ public class HeadsetControlPlusService extends AccessibilityService {
   }
 
   private void simulateSinglePress() {
-    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // Set to true each time, to allow it go through and be handled by system.
     long eventtime = SystemClock.uptimeMillis();
     KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
     sAudioManager.dispatchMediaKeyEvent(downEvent);
 
-    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // Set to true each time, to allow it go through and be handled by system.
     KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
     sAudioManager.dispatchMediaKeyEvent(upEvent);
@@ -232,23 +232,23 @@ public class HeadsetControlPlusService extends AccessibilityService {
 
   private void simulateDoublePress() {
 
-    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // Set to true each time, to allow it go through and be handled by system.
     long eventtime = SystemClock.uptimeMillis();
     KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
     sAudioManager.dispatchMediaKeyEvent(downEvent);
 
-    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // Set to true each time, to allow it go through and be handled by system.
     KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
     sAudioManager.dispatchMediaKeyEvent(upEvent);
 
-    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // Set to true each time, to allow it go through and be handled by system.
     KeyEvent downEvent2 = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
     sAudioManager.dispatchMediaKeyEvent(downEvent2);
 
-    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // Set to true each time, to allow it go through and be handled by system.
     KeyEvent upEvent2 = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
             KeyEvent.KEYCODE_HEADSETHOOK, 0);
     sAudioManager.dispatchMediaKeyEvent(upEvent2);
@@ -258,7 +258,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
   }
 
   private void simulateLongPress() {
-    mIsSimulation = true; // set to true each time, to allow it go through and be handled by system
+    mIsSimulation = true; // Set to true each time, to allow it go through and be handled by system.
 
     sAudioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,
             KeyEvent.KEYCODE_HEADSETHOOK));
@@ -268,7 +268,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
                 KeyEvent.KEYCODE_HEADSETHOOK));
       }
     };
-    //schedule keyup event after longpress timeout
+    // Schedule keyup event after longpress timeout.
     mHandler.postDelayed(mGestureLongPressed, ViewConfiguration.get(this).getLongPressTimeout());
 
     Log.i(APP_TAG, "simulated long press");

@@ -1,0 +1,53 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "nadchif",
+      "name": "Dan Chif",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/47924887?v=4",
+      "profile": "http://aboutchif.com",
+      "contributions": [
+        "code",
+        "maintenance",
+        "test"
+      ]
+    },
+    {
+      "login": "CyberianDeath",
+      "name": "CyberianDeath",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/60200739?v=4",
+      "profile": "https://github.com/CyberianDeath",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "Satzyakiz",
+      "name": "Satzyakiz",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/40039258?v=4",
+      "profile": "https://github.com/Satzyakiz",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "AMFIRNAS",
+      "name": "Firnas Aleem",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13057271?v=4",
+      "profile": "https://github.com/AMFIRNAS",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "headset-control-plus",
+  "projectOwner": "nadchif",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
