@@ -15,6 +15,14 @@
         <intent android:action="android.settings.ACCESSIBILITY_SETTINGS" />
         </Preference>
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="enable_hcp_foreground_service"
+            android:title="Background Service"
+            android:summaryOn="Enable gesture support when screen is off"
+            android:summaryOff="Disable gesture support when screen is off"
+            app:iconSpaceReserved="false" />
+
         <ListPreference
             android:defaultValue="@string/pref_hcp_mode_single"
             android:entries="@array/pref_hcp_button_mode"

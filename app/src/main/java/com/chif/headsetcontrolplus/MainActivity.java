@@ -1,6 +1,5 @@
-/*
- * MainActivity.java
- * This is Main Activity that is launched by default when a user opens HCP
+/**
+ * This is Main Activity that is launched by default when a user opens HCP.
  */
 
 package com.chif.headsetcontrolplus;
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity {
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

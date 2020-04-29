@@ -1,6 +1,5 @@
-/*
- * StravaProvider.java
- * Handles interactions between Strava and the app
+/**
+ * Handles interactions between Strava and the app.
  */
 
 package com.chif.headsetcontrolplus.providers;
@@ -16,13 +15,15 @@ public class StravaProvider {
 
   /** Strava Provider.
    * Handles interactions between Strava and the app
+   * @param context - the Context
    */
-  public StravaProvider(Context context) {
+  public StravaProvider(final Context context) {
     this.mContext = context;
   }
 
   /** Toggle Record.
-   * Starts an activity if its not recording. Stops an activity if its already recording.
+   * Starts an activity if its not recording.
+   * Stops an activity if its already recording.
    */
   public void toggleRecord() {
     Intent intent = new Intent(Intent.ACTION_RUN);

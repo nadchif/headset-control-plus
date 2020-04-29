@@ -9,11 +9,14 @@ package com.chif.headsetcontrolplus;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.chif.headsetcontrolplus.slides.IntroSlidePermissions;
+import com.chif.headsetcontrolplus.slides.IntroSlideSetup;
+import com.chif.headsetcontrolplus.slides.IntroSlideWelcome;
 import com.github.paolorotolo.appintro.AppIntro2;
 
 public class IntroActivity extends AppIntro2 {
   @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
+  protected void onCreate(final @Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     // Add welcome slide
@@ -30,7 +33,7 @@ public class IntroActivity extends AppIntro2 {
   }
 
   @Override
-  public void onDonePressed(Fragment currentFragment) {
+  public void onDonePressed(final Fragment currentFragment) {
     super.onDonePressed(currentFragment);
     finish();
   }

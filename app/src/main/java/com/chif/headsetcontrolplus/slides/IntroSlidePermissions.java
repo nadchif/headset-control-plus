@@ -3,7 +3,7 @@
  * Explains to the user the permissions the app will require. In this case its just accessibility
  */
 
-package com.chif.headsetcontrolplus;
+package com.chif.headsetcontrolplus.slides;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,10 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
+import com.chif.headsetcontrolplus.HeadsetControlPlusService;
+import com.chif.headsetcontrolplus.R;
 import com.github.paolorotolo.appintro.ISlidePolicy;
 
 
@@ -30,7 +31,7 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
   private Button mLaunchSettingsBtn;
   private TextView mSuccessMessage;
 
-  ContentObserver mObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
+  private ContentObserver mObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
     @Override
     public void onChange(boolean selfChange) {
       super.onChange(selfChange);
@@ -51,8 +52,8 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
   };
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                           final Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_intro_slide_permissions, container, false);
     mLaunchSettingsBtn = view.findViewById(R.id.btn_settings);
     mSuccessMessage = view.findViewById(R.id.txt_success);
