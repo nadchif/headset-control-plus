@@ -18,15 +18,15 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="enable_hcp_foreground_service"
-            android:title="Background Service"
-            android:summaryOn="Enable gesture support when screen is off"
-            android:summaryOff="Disable gesture support when screen is off"
+            android:title="@string/pref_title_background_service"
+            android:summaryOn="@string/pref_status_enabled_screen_off"
+            android:summaryOff="@string/pref_status_disabled_screen_off"
             app:iconSpaceReserved="false" />
 
         <ListPreference
             android:defaultValue="@string/pref_hcp_mode_single"
             android:entries="@array/pref_hcp_button_mode"
-            android:entryValues="@array/pref_hcp_mode_values"
+            android:entryValues="@array/pref_hcp_button_mode"
             android:key="hcp_mode"
             android:summary="@string/pref_hcp_mode_single"
             android:title="@string/pref_title_hcp_mode"
@@ -71,7 +71,7 @@
         app:iconSpaceReserved="false">
         <Preference
             android:key="about_hcp"
-            android:summary="0.1.4"
+            android:summary="0.2.0"
             android:title="@string/pref_title_version"
             app:iconSpaceReserved="false" ></Preference>
         <Preference

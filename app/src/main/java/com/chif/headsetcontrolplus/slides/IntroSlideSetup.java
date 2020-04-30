@@ -25,10 +25,10 @@ import com.github.paolorotolo.appintro.ISlidePolicy;
 public class IntroSlideSetup extends Fragment implements ISlidePolicy {
 
   private static final String APP_TAG = "HeadsetControlPlus";
-  private static final String sTroubleShootUrl = "https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md";
+  private static final String DOCS_TROUBLESHOOT_MD = "https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md";
   private Button mStatusMessageBtn;
   private boolean mSignalReceived = false;
-  BroadcastReceiver mBroadcastReceiver;
+  private BroadcastReceiver mBroadcastReceiver;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +39,8 @@ public class IntroSlideSetup extends Fragment implements ISlidePolicy {
     mStatusMessageBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(sTroubleShootUrl)));
+        getActivity()
+                .startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(DOCS_TROUBLESHOOT_MD)));
       }
     });
     mBroadcastReceiver = new BroadcastReceiver() {

@@ -33,7 +33,7 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
 
   private ContentObserver mObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
     @Override
-    public void onChange(boolean selfChange) {
+    public void onChange(final boolean selfChange) {
       super.onChange(selfChange);
       boolean accessibilityServiceEnabled = isAccessibilityServiceEnabled(getActivity(),
               HeadsetControlPlusService.class);
@@ -74,7 +74,7 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
 
     mLaunchSettingsBtn.setOnClickListener(new View.OnClickListener() {
       @Override
-      public void onClick(View view) {
+      public void onClick(final View view) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
         startActivity(intent);
       }

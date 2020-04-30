@@ -20,5 +20,33 @@ Check the following:
 If this is still not working [click here](https://github.com/nadchif/headset-control-plus/issues/new?assignees=&labels=bug&template=bug_report.md&title=) to bring the issue to our attention
 
 ## The app does not work when the screen is off
-This is a known issue, the Accessibility Service can only receive [keyEvents](https://developer.android.com/reference/android/accessibilityservice/AccessibilityService#onKeyEvent(android.view.KeyEvent)) when the screen is on. We are still figuring a way to make it continue to work while the screen is off.
+~~This is a known issue, the Accessibility Service can only receive [keyEvents](https://developer.android.com/reference/android/accessibilityservice/AccessibilityService#onKeyEvent(android.view.KeyEvent)) when the screen is on. We are still figuring a way to make it continue to work while the screen is off.~~
+In the recent versions of Headset Control Plus, gestures can now work while the screen is off. However, the following limitations still apply:
+1. Some "aggressive" music player can "steal" [MediaSession](https://developer.android.com/reference/android/support/v4/media/session/MediaSessionCompat) focus, HCP may no longer receive Headset Events, until the screen goes on and off again.
+2. On some devices, `long press` may still not work when screen is off, because of apps like BixBy that possess the gesture action.
+
+
+## I press play/pause and nothing happens
+This happens could happen if 1) you have not recently played music from a music player or your music player does not support commands from *com.android.music.musicservicecommand*.
+For controlling music, Headset Control Plus, broadcasts intents to *com.android.music.musicservicecommand*
+
+Play/Pause:
+action: `com.android.music.musicservicecommand`
+extra: `"command":"togglepause"`
+
+Next Track:
+action: `com.android.music.musicservicecommand`
+extra: `"command":"next"`
+
+Previous Track:
+action: `com.android.music.musicservicecommand`
+extra: `"command":"previous"`
+
+Whether these commands are acted upon after the broadcast, depends on your music app.
+
+## Strava actions not wroking
+The Strava actions work by running the `http://strava.com/nfc/record/toggle` intent. How this is then handled depends on your operating system configuration and Strava. For example, if your operating system is set to launch the URL in a browser, **IT WILL NOT WORK**. Needless to say, Strava must be already installed and you must be logged in already.
+
+Some users have also reported issues like [this](https://groups.google.com/d/msg/strava-api/Uywi_830YWE/aqWmzyr8CwAJ)
+
 

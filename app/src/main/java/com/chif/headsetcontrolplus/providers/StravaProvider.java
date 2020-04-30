@@ -1,5 +1,9 @@
 /**
  * Handles interactions between Strava and the app.
+ *
+ * <p>ISSUES:
+ * Sometimes it just brings the strava app to the foreground, instead of start/stop.
+ * see: https://groups.google.com/d/msg/strava-api/Uywi_830YWE/aqWmzyr8CwAJ
  */
 
 package com.chif.headsetcontrolplus.providers;

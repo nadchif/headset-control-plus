@@ -1,20 +1,18 @@
-/*
+/**
  * HeadsetControlPlusService.java
  *
+ <p>Copyright 2020 github.com/nadchif
  *
- * Copyright 2020 github.com/nadchif
+ <p>Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ <p>Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 
@@ -195,12 +193,13 @@ public class HeadsetControlPlusService extends AccessibilityService {
     Log.i(APP_TAG, "hcp simulated long press");
   }
 
+  /* Broadcast a togglepause intent */
   private static void playPause() {
     Intent i = new Intent("com.android.music.musicservicecommand");
     i.putExtra("command", "togglepause");
     sContext.sendBroadcast(i);
 
-    /* OUTDATED approach. now use
+    /* OUTDATED approach
     *-------------------------------------
     long eventtime = SystemClock.uptimeMillis();
 
@@ -215,6 +214,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
     Log.i(APP_TAG, "Play Pause");
   }
 
+  /* Broadcast a next track intent */
   private static void nextTrack() {
     Intent i = new Intent("com.android.music.musicservicecommand");
     i.putExtra("command", "next");
@@ -235,6 +235,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
     Log.i(APP_TAG, "Next Track");
   }
 
+  /* Broadcast a previous track intent */
   private static void previousTrack() {
     Intent i = new Intent("com.android.music.musicservicecommand");
     i.putExtra("command", "previous");

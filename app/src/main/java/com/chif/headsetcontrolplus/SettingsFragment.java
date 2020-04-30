@@ -4,15 +4,11 @@
 
 package com.chif.headsetcontrolplus;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.widget.Toast;
 import androidx.core.content.ContextCompat;
@@ -21,6 +17,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
+import com.chif.headsetcontrolplus.shared.ServiceBase;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -69,33 +66,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     .getString(preference.getKey(), ""));
   }
 
-  /*
-   * Checks if the Accessibility Service is enabled. Returns true if it is
-   */
-  private static boolean isAccessibilityServiceEnabled(final Context context,
-                                                      final Class<?> accessibilityService) {
-    ComponentName expectedComponentName = new ComponentName(context, accessibilityService);
-
-    String enabledServicesSetting = Settings.Secure.getString(context.getContentResolver(),
-            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-    if (enabledServicesSetting == null) {
-      return false;
-    }
-
-    TextUtils.SimpleStringSplitter colonSplitter = new TextUtils.SimpleStringSplitter(':');
-    colonSplitter.setString(enabledServicesSetting);
-
-    while (colonSplitter.hasNext()) {
-      String componentNameString = colonSplitter.next();
-      ComponentName enabledService = ComponentName.unflattenFromString(componentNameString);
-
-      if (enabledService != null && enabledService.equals(expectedComponentName)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   @Override
   public void onResume() {
     super.onResume();
@@ -116,13 +86,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
   private void setForegroundServiceSwitchListener() {
     final SwitchPreference preferenceSwitch = findPreference("enable_hcp_foreground_service");
-
     preferenceSwitch.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
       @Override
       public boolean onPreferenceChange(final Preference preference, final Object newValue) {
         final boolean isEnabled = (Boolean) newValue;
         if (isEnabled) {
-          if (!isAccessibilityServiceEnabled(getActivity(), HeadsetControlPlusService.class)) {
+          if (!ServiceBase.isAccessibilityServiceEnabled(getActivity(),
+                  HeadsetControlPlusService.class)) {
             Toast.makeText(getContext(), getString(R.string.err_require_access),
                     Toast.LENGTH_SHORT).show();
             stopService();
@@ -144,7 +114,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
   private void setAccessibilityServiceText() {
     Preference enableHeadsetControlPlusService = findPreference("enable_hcp");
     Spannable summary;
-    if (isAccessibilityServiceEnabled(getActivity(), HeadsetControlPlusService.class)) {
+    if (ServiceBase.isAccessibilityServiceEnabled(getActivity(), HeadsetControlPlusService.class)) {
       summary = new SpannableString(getString(R.string.pref_status_enabled_hcp));
       summary.setSpan(new ForegroundColorSpan(Color.parseColor("#6ab04c")), 0, summary.length(), 0);
       enableHeadsetControlPlusService.setSummary(summary);
@@ -156,14 +126,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
               0, summary.length(), 0);
       enableHeadsetControlPlusService.setSummary(summary);
       stopService();
+      mPrefForegroundSwitch.setChecked(false);
+      //refresh page
+
     }
   }
 
   private void startService() {
-
     mPrefForegroundSwitch.getSharedPreferences().edit()
             .putBoolean("enable_hcp_foreground_service", true).commit();
-
     Intent serviceIntent = new Intent(getActivity(), ForegroundService.class);
     ContextCompat.startForegroundService(getActivity(), serviceIntent);
   }

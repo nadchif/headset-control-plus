@@ -1,11 +1,11 @@
-/*
- * IntroActivity.java
+/** Intro Activity.
  * Starts the introduction slider that will inform the user about the settings
  * and test the headset button
  */
 
 package com.chif.headsetcontrolplus;
 
+import android.Manifest;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,6 +30,13 @@ public class IntroActivity extends AppIntro2 {
 
     // Hide Skip/Done button
     showSkipButton(false);
+
+    // Ask for permissions
+    askForPermissions(new String[]{
+        Manifest.permission.CAMERA,
+        Manifest.permission.FOREGROUND_SERVICE,
+        Manifest.permission.WAKE_LOCK}, 1);
+
   }
 
   @Override

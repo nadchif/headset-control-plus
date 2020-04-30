@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chif.headsetcontrolplus">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -16,15 +17,25 @@
         android:theme="@style/AppTheme">
 
         <receiver android:name="androidx.media.session.MediaButtonReceiver" >
-            <intent-filter>
+            <intent-filter android:priority="10000">
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
                 <action android:name="android.media.AUDIO_BECOMING_NOISY" />
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".AutoStart"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:directBootAware="true">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.REBOOT"/>
+            </intent-filter>
+        </receiver>
+
         <service android:name=".ForegroundService$MediaButtonService" >
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            <intent-filter android:priority="10000">
                 <action android:name="android.intent.action.SCREEN_OFF" />
                 <action android:name="android.intent.action.SCREEN_ON" />
             </intent-filter>
@@ -49,7 +60,12 @@
             <meta-data android:name="android.accessibilityservice"
                 android:resource="@xml/service_config" />
         </service>
-
+        <service android:enabled="true"
+            android:directBootAware="true"
+            android:name=".AutoStart"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+        </service>
         <service android:name=".ForegroundService">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
