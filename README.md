@@ -26,7 +26,7 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 
 ### Why choose HCP?
 
-* Lightweight (~800-900kb)
+* Lightweight (~0.9 Mb)
 * You can modify and improve it :-)
 * No ADs
 * Absolutely FREE!

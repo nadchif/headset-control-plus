@@ -3,7 +3,7 @@
  * Tests if the current setup (Phone + Headset) is supported
  */
 
-package com.chif.headsetcontrolplus;
+package com.chif.headsetcontrolplus.slides;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,15 +19,16 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
+import com.chif.headsetcontrolplus.R;
 import com.github.paolorotolo.appintro.ISlidePolicy;
 
 public class IntroSlideSetup extends Fragment implements ISlidePolicy {
 
   private static final String APP_TAG = "HeadsetControlPlus";
-  private static final String mTroubleShootUrl = "https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md";
+  private static final String DOCS_TROUBLESHOOT_MD = "https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md";
   private Button mStatusMessageBtn;
   private boolean mSignalReceived = false;
-  BroadcastReceiver mBroadcastReceiver;
+  private BroadcastReceiver mBroadcastReceiver;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +39,8 @@ public class IntroSlideSetup extends Fragment implements ISlidePolicy {
     mStatusMessageBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mTroubleShootUrl)));
+        getActivity()
+                .startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(DOCS_TROUBLESHOOT_MD)));
       }
     });
     mBroadcastReceiver = new BroadcastReceiver() {

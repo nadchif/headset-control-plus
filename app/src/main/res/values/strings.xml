@@ -18,6 +18,12 @@
     <string name="pref_status_disabled_hcp">
         DISABLED. Tap here to open Accesibility settings.
     </string>
+    <string name="pref_status_enabled_screen_off">
+        Enable gesture support when screen is off. (May consume more battery)
+    </string>
+    <string name="pref_status_disabled_screen_off">
+        Disable gesture support when screen is off
+    </string>
     <string name="pref_status_blank_hcp">
 
     </string>
@@ -26,6 +32,9 @@
     </string>
 
     <!--Settings Sections-->
+    <string name="pref_title_background_service">
+        Background Service
+    </string>
     <string name="pref_title_service">
         Service
     </string>

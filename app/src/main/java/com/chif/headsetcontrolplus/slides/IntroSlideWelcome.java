@@ -3,14 +3,14 @@
  * Shows the welcoming remarks
  */
 
-package com.chif.headsetcontrolplus;
+package com.chif.headsetcontrolplus.slides;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
+import com.chif.headsetcontrolplus.R;
 
 public class IntroSlideWelcome extends Fragment {
 

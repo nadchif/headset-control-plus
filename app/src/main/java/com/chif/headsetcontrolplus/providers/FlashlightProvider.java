@@ -1,6 +1,5 @@
-/*
- * FlashlightProvider.java
- * Handles interactions between Camera/Flashlight and the app.
+/** Flashlight Provider
+ *  Handles interactions between Camera/Flashlight and the app.
  */
 
 package com.chif.headsetcontrolplus.providers;
@@ -12,13 +11,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 public class FlashlightProvider {
-  private static final String APP_TAG = FlashlightProvider.class.getSimpleName();
+  private static final String APP_TAG = FlashlightProvider.class
+          .getSimpleName();
   private static boolean sIsFlashlightOn = false;
   private CameraManager mCamManager;
   private Context mContext;
   private static CameraManager.TorchCallback torchCallback = new CameraManager.TorchCallback() {
     @Override
-    public void onTorchModeChanged(@NonNull String cameraId, boolean enabled) {
+    public void onTorchModeChanged(@NonNull final String cameraId, final boolean enabled) {
       super.onTorchModeChanged(cameraId, enabled);
       sIsFlashlightOn = enabled;
     }
@@ -26,15 +26,16 @@ public class FlashlightProvider {
 
   /** Flashlight Provider.
    * Handles interactions between Camera/Flashlight and the app.
+   * @param context - The Context
    */
-  public FlashlightProvider(Context context) {
+  public FlashlightProvider(final Context context) {
     this.mContext = context;
     registerCallback();
   }
 
   private void registerCallback() {
     mCamManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
-    mCamManager.registerTorchCallback(torchCallback, null);// (callback, handler)
+    mCamManager.registerTorchCallback(torchCallback, null); // (callback, handler)
   }
 
   /*
