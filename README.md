@@ -74,6 +74,9 @@ Headset Control Plus allows you to map certain phone actions to respond to gestu
 ### License
 Apache-2.0
 
+### Attribution
+App Icon - Derived from [Speaker Vectors by Vecteezy](https://www.vecteezy.com/free-vector/speaker)
+
 ### Contribution
 Contributions and suggestions are very welcome and wanted. I try to respond to pull requests within 48 hours. For more information see [CONTRIBUTING.md](https://github.com/nadchif/headset-control-plus/blob/master/CONTRIBUTING.md)
 

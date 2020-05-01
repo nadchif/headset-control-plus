@@ -82,8 +82,8 @@ public class ForegroundService extends Service {
     mStateBuilder = new PlaybackStateCompat.Builder()
             .setActions(
                     PlaybackStateCompat.ACTION_PLAY
-                    | PlaybackStateCompat.ACTION_PAUSE
-                    | PlaybackStateCompat.ACTION_PLAY_PAUSE);
+                            | PlaybackStateCompat.ACTION_PAUSE
+                            | PlaybackStateCompat.ACTION_PLAY_PAUSE);
 
     mMediaSessionCompat.setPlaybackState(mStateBuilder.build());
     mMediaSessionCompat.setCallback(new MediaSessionCompat.Callback() {
@@ -148,7 +148,7 @@ public class ForegroundService extends Service {
       NotificationChannel serviceChannel = new NotificationChannel(
               CHANNEL_ID,
               "Headset Control Plus Gesture Support",
-              NotificationManager.IMPORTANCE_HIGH
+              NotificationManager.IMPORTANCE_LOW
       );
       NotificationManager manager = getSystemService(NotificationManager.class);
       manager.createNotificationChannel(serviceChannel);
@@ -303,7 +303,9 @@ public class ForegroundService extends Service {
 
       } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
         mIsScreenOn = true;
-        mMediaPlayer.stop();
+        if (mMediaPlayer != null) {
+          mMediaPlayer.stop();
+        }
         mMediaSessionCompat.setActive(false);
         if (!ServiceBase.isAccessibilityServiceEnabled(context, HeadsetControlPlusService.class)) {
           Intent serviceIntent = new Intent(context, ForegroundService.class);
