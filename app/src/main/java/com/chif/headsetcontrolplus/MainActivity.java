@@ -92,10 +92,5 @@ public class MainActivity extends AppCompatActivity implements
     return true;
   }
 
-  public static class AppInfoFragment extends PreferenceFragmentCompat {
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-      setPreferencesFromResource(R.xml.appinfo_preferences, rootKey);
-    }
-  }
+
 }

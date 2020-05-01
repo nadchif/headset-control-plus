@@ -1,16 +1,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
-        android:key="about_hcp_version"
-        android:summary="0.2.1"
-        android:title="@string/pref_title_version"
+        app:key="about_hcp_version"
+        app:summary="0.2.2"
+        app:title="@string/pref_title_version"
         app:iconSpaceReserved="false" ></Preference>
     <Preference
-        android:key="about_hcp_license"
-        android:summary="Apache-2.0"
-        android:title="@string/pref_title_licence"
+        app:key="about_hcp_license"
+        app:summary="Apache-2.0"
+        app:title="@string/pref_title_licence"
         app:iconSpaceReserved="false" >
         <intent
             android:action="android.intent.action.VIEW"
@@ -18,9 +16,9 @@
             />
     </Preference>
     <Preference
-        android:key="about_hcp_icon"
-        android:summary="Derived from Speaker Vectors by Vecteezy"
-        android:title="App Icon"
+        app:key="about_hcp_icon"
+        app:summary="Derived from Speaker Vectors by Vecteezy"
+        app:title="App Icon"
         app:iconSpaceReserved="false" >
         <intent
             android:action="android.intent.action.VIEW"
@@ -28,8 +26,8 @@
             />
     </Preference>
     <Preference
-        android:title="@string/pref_title_contribute"
-        android:summary="@string/pref_title_contribute_details"
+        app:title="@string/pref_title_contribute"
+        app:summary="@string/pref_title_contribute_details"
         app:iconSpaceReserved="false" >
         <intent
             android:action="android.intent.action.VIEW"
@@ -37,7 +35,7 @@
             />
     </Preference>
     <Preference
-        android:title="@string/pref_title_privacy"
+        app:title="@string/pref_title_privacy"
         app:iconSpaceReserved="false" >
         <intent
             android:action="android.intent.action.VIEW"

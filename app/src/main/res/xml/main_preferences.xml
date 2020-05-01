@@ -1,78 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
-        android:title="@string/pref_title_service"
+        app:title="@string/pref_title_service"
         app:iconSpaceReserved="false">
 
         <Preference
-            android:key="enable_hcp"
-            android:title="@string/pref_title_hcp_status"
-            android:summary="@string/pref_status_blank_hcp"
+            app:key="enable_hcp"
+            app:title="@string/pref_title_hcp_status"
+            app:summary="@string/pref_status_blank_hcp"
             app:iconSpaceReserved="false">
         <intent android:action="android.settings.ACCESSIBILITY_SETTINGS" />
         </Preference>
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="enable_hcp_foreground_service"
-            android:title="@string/pref_title_background_service"
-            android:summaryOn="@string/pref_status_enabled_screen_off"
-            android:summaryOff="@string/pref_status_disabled_screen_off"
+            app:defaultValue="false"
+            app:key="enable_hcp_foreground_service"
+            app:title="@string/pref_title_background_service"
+            app:summaryOn="@string/pref_status_enabled_screen_off"
+            app:summaryOff="@string/pref_status_disabled_screen_off"
             app:iconSpaceReserved="false" />
 
         <ListPreference
-            android:defaultValue="@string/pref_hcp_mode_single"
-            android:entries="@array/pref_hcp_button_mode"
-            android:entryValues="@array/pref_hcp_button_mode"
-            android:key="hcp_mode"
-            android:summary="@string/pref_hcp_mode_single"
-            android:title="@string/pref_title_hcp_mode"
+            app:defaultValue="@string/pref_hcp_mode_single"
+            app:entries="@array/pref_hcp_button_mode"
+            app:entryValues="@array/pref_hcp_button_mode"
+            app:key="hcp_mode"
+            app:summary="@string/pref_hcp_mode_single"
+            app:title="@string/pref_title_hcp_mode"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_title_gestures"
+        app:title="@string/pref_title_gestures"
         app:iconSpaceReserved="false">
         <ListPreference
-            android:defaultValue="@string/pref_button_actions_playpause"
-            android:entries="@array/pref_media_actions"
-            android:entryValues="@array/pref_media_actions"
-            android:key="hcp_gestures_single_press"
-            android:summary="@string/pref_button_actions_default"
-            android:title="@string/pref_button_gestures_single_press"
+            app:defaultValue="@string/pref_button_actions_playpause"
+            app:entries="@array/pref_media_actions"
+            app:entryValues="@array/pref_media_actions"
+            app:key="hcp_gestures_single_press"
+            app:summary="@string/pref_button_actions_default"
+            app:title="@string/pref_button_gestures_single_press"
             app:iconSpaceReserved="false" />
 
         <ListPreference
-            android:defaultValue="@string/pref_button_actions_next"
-            android:entries="@array/pref_media_actions"
-            android:entryValues="@array/pref_media_actions"
-            android:key="hcp_gestures_double_press"
-            android:summary="@string/pref_button_actions_next"
-            android:title="@string/pref_button_gestures_double_press"
+            app:defaultValue="@string/pref_button_actions_next"
+            app:entries="@array/pref_media_actions"
+            app:entryValues="@array/pref_media_actions"
+            app:key="hcp_gestures_double_press"
+            app:summary="@string/pref_button_actions_next"
+            app:title="@string/pref_button_gestures_double_press"
             app:iconSpaceReserved="false" />
 
         <ListPreference
-            android:defaultValue="@string/pref_button_actions_previous"
-            android:entries="@array/pref_media_actions"
-            android:entryValues="@array/pref_media_actions"
-            android:key="hcp_gestures_long_press"
-            android:summary="@string/pref_button_actions_previous"
-            android:title="@string/pref_button_gestures_long_press"
+            app:defaultValue="@string/pref_button_actions_previous"
+            app:entries="@array/pref_media_actions"
+            app:entryValues="@array/pref_media_actions"
+            app:key="hcp_gestures_long_press"
+            app:summary="@string/pref_button_actions_previous"
+            app:title="@string/pref_button_gestures_long_press"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_title_help"
+        app:title="@string/pref_title_help"
         app:iconSpaceReserved="false">
         <Preference
-            android:fragment="com.chif.headsetcontrolplus.MainActivity$AppInfoFragment"
+            app:fragment="com.chif.headsetcontrolplus.AppInfoFragment"
             app:iconSpaceReserved="false"
-            android:key="app_info_header"
-            android:title="@string/pref_title_moreinfo" />
+            app:key="app_info_header"
+            app:title="@string/pref_title_moreinfo" />
     </PreferenceCategory>
 </PreferenceScreen>
