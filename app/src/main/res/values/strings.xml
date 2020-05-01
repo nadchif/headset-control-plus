@@ -41,11 +41,17 @@
     <string name="pref_title_gestures">
         Headset Gestures
     </string>
-    <string name="pref_title_application">
-        Application
+    <string name="pref_title_help">
+        Help
+    </string>
+    <string name="pref_title_moreinfo">
+        More Information
     </string>
     <string name="pref_title_version">
-        Version
+        App Version
+    </string>
+    <string name="pref_title_licence">
+        License
     </string>
     <string name="pref_title_contribute">
         Contribute

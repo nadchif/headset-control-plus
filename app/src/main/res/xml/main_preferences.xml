@@ -67,8 +67,9 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_title_application"
+        android:title="@string/pref_title_help"
         app:iconSpaceReserved="false">
+        <!--
         <Preference
             android:key="about_hcp"
             android:summary="0.2.0"
@@ -91,5 +92,11 @@
                 android:data="https://github.com/nadchif/headset-control-plus/blob/master/PRIVACY.md"
                 />
         </Preference>
+        -->
+        <Preference
+            android:fragment="com.chif.headsetcontrolplus.MainActivity$AppInfoFragment"
+            app:iconSpaceReserved="false"
+            android:key="app_info_header"
+            android:title="@string/pref_title_moreinfo" />
     </PreferenceCategory>
 </PreferenceScreen>

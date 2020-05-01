@@ -1,0 +1,47 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Preference
+        android:key="about_hcp_version"
+        android:summary="0.2.1"
+        android:title="@string/pref_title_version"
+        app:iconSpaceReserved="false" ></Preference>
+    <Preference
+        android:key="about_hcp_license"
+        android:summary="Apache-2.0"
+        android:title="@string/pref_title_licence"
+        app:iconSpaceReserved="false" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://github.com/nadchif/headset-control-plus/blob/master/PRIVACY.md"
+            />
+    </Preference>
+    <Preference
+        android:key="about_hcp_icon"
+        android:summary="Derived from Speaker Vectors by Vecteezy"
+        android:title="App Icon"
+        app:iconSpaceReserved="false" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://www.vecteezy.com/free-vector/speaker"
+            />
+    </Preference>
+    <Preference
+        android:title="@string/pref_title_contribute"
+        android:summary="@string/pref_title_contribute_details"
+        app:iconSpaceReserved="false" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://github.com/nadchif/headset-control-plus"
+            />
+    </Preference>
+    <Preference
+        android:title="@string/pref_title_privacy"
+        app:iconSpaceReserved="false" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://github.com/nadchif/headset-control-plus/blob/master/PRIVACY.md"
+            />
+    </Preference>
+</PreferenceScreen>
