@@ -82,8 +82,8 @@ public class ForegroundService extends Service {
     mStateBuilder = new PlaybackStateCompat.Builder()
             .setActions(
                     PlaybackStateCompat.ACTION_PLAY
-                    | PlaybackStateCompat.ACTION_PAUSE
-                    | PlaybackStateCompat.ACTION_PLAY_PAUSE);
+                            | PlaybackStateCompat.ACTION_PAUSE
+                            | PlaybackStateCompat.ACTION_PLAY_PAUSE);
 
     mMediaSessionCompat.setPlaybackState(mStateBuilder.build());
     mMediaSessionCompat.setCallback(new MediaSessionCompat.Callback() {
@@ -303,7 +303,7 @@ public class ForegroundService extends Service {
 
       } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
         mIsScreenOn = true;
-        if(mMediaPlayer != null) {
+        if (mMediaPlayer != null) {
           mMediaPlayer.stop();
         }
         mMediaSessionCompat.setActive(false);

@@ -15,25 +15,6 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-/*
-public class MainActivity extends AppCompatActivity {
-
-  @Override
-  protected void onCreate(final Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    getSupportFragmentManager().beginTransaction().replace(R.id.app_main_settings,
-            new SettingsFragment()).commit();
-
-    // Check if Intro slider already ran, if not launch it
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-    if (!sp.getBoolean("first", false)) {
-      Intent intent = new Intent(this, IntroActivity.class);
-      startActivity(intent);
-    }
-  }
-}
-*/
 public class MainActivity extends AppCompatActivity implements
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
@@ -60,22 +41,22 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     getSupportFragmentManager().addOnBackStackChangedListener(
-            new FragmentManager.OnBackStackChangedListener() {
-              @Override
-              public void onBackStackChanged() {
-                ActionBar actionBar = getSupportActionBar();
-                if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                  setTitle(R.string.app_name);
-                  if (actionBar != null) {
-                    actionBar.setDisplayHomeAsUpEnabled(false);
-                  }
-                  return;
-                }
-                if (actionBar != null) {
-                  actionBar.setDisplayHomeAsUpEnabled(true);
-                }
+        new FragmentManager.OnBackStackChangedListener() {
+          @Override
+          public void onBackStackChanged() {
+            ActionBar actionBar = getSupportActionBar();
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+              setTitle(R.string.app_name);
+              if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(false);
               }
-            });
+              return;
+            }
+            if (actionBar != null) {
+              actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+          }
+        });
   }
 
   @Override
