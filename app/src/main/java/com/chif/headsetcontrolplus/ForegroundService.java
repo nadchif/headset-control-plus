@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Handler;
@@ -49,6 +50,8 @@ import com.chif.headsetcontrolplus.shared.ServiceBase;
 public class ForegroundService extends Service {
   public static final String CHANNEL_ID = "ForegroundServiceChannel";
   private static final String APP_TAG = HeadsetControlPlusService.class.getSimpleName();
+  private static final Handler S_HANDLER = new Handler();
+  private static AudioManager sAudioManager;
 
   private static boolean sScheduleSinglePress = false;
   private static boolean sScheduleDoublePress = false;
@@ -76,6 +79,8 @@ public class ForegroundService extends Service {
     sWakeLock = sPowerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK
             | PowerManager.ACQUIRE_CAUSES_WAKEUP
             | PowerManager.ON_AFTER_RELEASE, "hcp::WakeLock");
+
+    sAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
 
     mMediaSessionCompat = new MediaSessionCompat(this, "HCPMediaSessionCompat");
 
@@ -332,21 +337,35 @@ public class ForegroundService extends Service {
     }
 
     private void startMediaPlayerLoop() {
-      mMediaPlayer = MediaPlayer.create(this.mServiceContext, R.raw.soundclip);
-      mMediaPlayer.setVolume(0, 0);
-      //mMediaPlayer.setLooping(true);
-      mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mediaPlayer) {
-          mediaPlayer.reset();
-          mediaPlayer.release();
-          if (!mIsScreenOn) {
-            startMediaPlayerLoop();
+      // check if audio is currently playing;
+      if (sAudioManager.isMusicActive()) {
+        //theres a music player which could steal focus. regain focus by playing a silent clip
+        mMediaPlayer = MediaPlayer.create(this.mServiceContext, R.raw.soundclip);
+        mMediaPlayer.setVolume(0, 0);
+        //mMediaPlayer.setLooping(true);
+        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+          @Override
+          public void onCompletion(MediaPlayer mediaPlayer) {
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            if (!mIsScreenOn) {
+              startMediaPlayerLoop();
+            }
           }
-        }
-      });
-      mMediaPlayer.start();
-      mMediaSessionCompat.setActive(true);
+        });
+        mMediaPlayer.start();
+        mMediaSessionCompat.setActive(true);
+      } else {
+        //No media player is playing, so no need to steal back focus
+        Runnable mediaPlayerLoopCheck = new Runnable() {
+          public void run() {
+            if (!mIsScreenOn) {
+              startMediaPlayerLoop();
+            }
+          }
+        };
+        S_HANDLER.postDelayed(mediaPlayerLoopCheck, 1000);
+      }
     }
 
     public boolean isScreenOn() {
