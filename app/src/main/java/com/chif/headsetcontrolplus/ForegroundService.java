@@ -332,7 +332,7 @@ public class ForegroundService extends Service {
     }
 
     private void startMediaPlayerLoop() {
-      mMediaPlayer = MediaPlayer.create(this.mServiceContext, R.raw.soundlooper);
+      mMediaPlayer = MediaPlayer.create(this.mServiceContext, R.raw.soundclip);
       mMediaPlayer.setVolume(0, 0);
       //mMediaPlayer.setLooping(true);
       mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
