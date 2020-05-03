@@ -304,13 +304,18 @@ public class ForegroundService extends Service {
         });
 
         Log.i(APP_TAG, "Screen Off...launched silent media clip");
-        startMediaPlayerLoop();
+
+        // get focus already (by calling forceActivatePlayer), then start loop
+        startMediaPlayerLoop(true);
 
       } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
         mIsScreenOn = true;
+        /*
         if (mMediaPlayer != null) {
           mMediaPlayer.stop();
         }
+        */
+
         mMediaSessionCompat.setActive(false);
         if (!ServiceBase.isAccessibilityServiceEnabled(context, HeadsetControlPlusService.class)) {
           Intent serviceIntent = new Intent(context, ForegroundService.class);
@@ -336,10 +341,10 @@ public class ForegroundService extends Service {
       }
     }
 
-    private void startMediaPlayerLoop() {
+    private void startMediaPlayerLoop(boolean forceActivatePlayer) {
       // check if audio is currently playing;
-      if (sAudioManager.isMusicActive()) {
-        //theres a music player which could steal focus. regain focus by playing a silent clip
+      if (sAudioManager.isMusicActive() || forceActivatePlayer) {
+        //there's a music player which could steal focus. regain focus by playing a silent clip
         mMediaPlayer = MediaPlayer.create(this.mServiceContext, R.raw.soundclip);
         mMediaPlayer.setVolume(0, 0);
         //mMediaPlayer.setLooping(true);
@@ -349,7 +354,7 @@ public class ForegroundService extends Service {
             mediaPlayer.reset();
             mediaPlayer.release();
             if (!mIsScreenOn) {
-              startMediaPlayerLoop();
+              startMediaPlayerLoop(false);
             }
           }
         });
@@ -360,7 +365,7 @@ public class ForegroundService extends Service {
         Runnable mediaPlayerLoopCheck = new Runnable() {
           public void run() {
             if (!mIsScreenOn) {
-              startMediaPlayerLoop();
+              startMediaPlayerLoop(false);
             }
           }
         };
