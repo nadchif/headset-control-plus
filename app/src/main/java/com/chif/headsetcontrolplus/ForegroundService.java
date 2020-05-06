@@ -53,12 +53,7 @@ public class ForegroundService extends Service {
   private static final Handler S_HANDLER = new Handler();
   private static AudioManager sAudioManager;
 
-  private static boolean sScheduleSinglePress = false;
-  private static boolean sScheduleDoublePress = false;
-  private static boolean sScheduleLongPress = false;
   private static int sKeyDownCount = 0;
-  private static PowerManager sPowerManager;
-  private static PowerManager.WakeLock sWakeLock;
   private final Handler mHandler = new Handler();
   private MediaSessionCompat mMediaSessionCompat;
   private MediaPlayer mMediaPlayer;
@@ -74,11 +69,6 @@ public class ForegroundService extends Service {
   public void onCreate() {
     super.onCreate();
     mContext = this;
-
-    sPowerManager = (PowerManager) this.getSystemService(this.POWER_SERVICE);
-    sWakeLock = sPowerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK
-            | PowerManager.ACQUIRE_CAUSES_WAKEUP
-            | PowerManager.ON_AFTER_RELEASE, "hcp::WakeLock");
 
     sAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
 
@@ -198,10 +188,8 @@ public class ForegroundService extends Service {
         mGestureLongPressed = new Runnable() {
           public void run() {
             mGestureMode = "long_press";
-            sScheduleLongPress = true;
-            sWakeLock.acquire();
-            Log.w(APP_TAG, "Scheduled long press Action");
-            sWakeLock.release();
+            HeadsetControlPlusService.handleGesture("long");
+            Log.w(APP_TAG, "Executed long press Action");
           }
         };
         // Start tracking long press. If no action up is detected after 950ms,
@@ -220,20 +208,16 @@ public class ForegroundService extends Service {
             if (sKeyDownCount == 1) {
               // Check if this keyup event is not following a long press event.
               if (mGestureMode != "long_press") {
-                sScheduleSinglePress = true;
-                sWakeLock.acquire();
-                Log.w(APP_TAG, "Scheduled single press Action");
-                sWakeLock.release();
+                HeadsetControlPlusService.handleGesture("single");
+                Log.w(APP_TAG, "Executed single press Action");
               }
               mGestureMode = "unknown";
             }
             // Double press.
             if (sKeyDownCount == 2) {
               if (mGestureMode != "long_press") {
-                sScheduleDoublePress = true;
-                sWakeLock.acquire();
-                Log.w(APP_TAG, "Scheduled double press Action");
-                sWakeLock.release();
+                HeadsetControlPlusService.handleGesture("double");
+                Log.w(APP_TAG, "Executed double press Action");
               }
               mGestureMode = "unknown";
             }
@@ -320,22 +304,6 @@ public class ForegroundService extends Service {
         if (!ServiceBase.isAccessibilityServiceEnabled(context, HeadsetControlPlusService.class)) {
           Intent serviceIntent = new Intent(context, ForegroundService.class);
           context.stopService(serviceIntent);
-        } else {
-          // handle scheduled events once screen is on
-          if (sScheduleSinglePress) {
-            sScheduleSinglePress = false;
-            HeadsetControlPlusService.handleGesture("single");
-          }
-          // handle scheduled events once screen is on
-          if (sScheduleDoublePress) {
-            sScheduleDoublePress = false;
-            HeadsetControlPlusService.handleGesture("double");
-          }
-          // handle scheduled events once screen is on
-          if (sScheduleLongPress) {
-            sScheduleLongPress = false;
-            HeadsetControlPlusService.handleGesture("long");
-          }
         }
         Log.i(APP_TAG, "Screen On...turned off media clip");
       }
