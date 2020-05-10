@@ -7,7 +7,7 @@ Headset Control Plus
 [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
 [<img src="https://img.shields.io/badge/slack-@ossenthusiasts-brown.svg?logo=slack">](https://ossenthusiasts.slack.com/)
 
-Unleash the power of your Headset button by supporting gesture like: Long Press, Double Press, Triple Press etc.
+Unleash the power of your Headset button by customizing gestures like: Long Press, Double Press, Triple Press etc.
 
 <!-- markdownlint-disable -->
 <a href='https://play.google.com/store/apps/details?id=com.chif.headsetcontrolplus&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="64"/></a>
