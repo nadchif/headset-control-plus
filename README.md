@@ -5,7 +5,7 @@ Headset Control Plus
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Android CI - Build](https://github.com/nadchif/headset-control-plus/workflows/Android%20CI%20-%20Build/badge.svg)
 [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
-[<img src="https://img.shields.io/badge/slack-@ossenthusiasts-brown.svg?logo=slack">](https://join.slack.com/t/ossenthusiasts/shared_invite/zt-eh9g0u7k-l2uUmCCBhUTHY8EWZFShIw)
+[<img src="https://img.shields.io/badge/slack-@ossenthusiasts-maroon.svg?logo=slack">](https://join.slack.com/t/ossenthusiasts/shared_invite/zt-eh9g0u7k-l2uUmCCBhUTHY8EWZFShIw)
 
 Unleash the power of your Headset button by customizing gestures like: Long Press, Double Press, Triple Press etc.
 
