@@ -199,18 +199,6 @@ public class HeadsetControlPlusService extends AccessibilityService {
     i.putExtra("command", "togglepause");
     sContext.sendBroadcast(i);
 
-    /* OUTDATED approach
-    *-------------------------------------
-    long eventtime = SystemClock.uptimeMillis();
-
-    KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
-            KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, 0);
-    sAudioManager.dispatchMediaKeyEvent(downEvent);
-
-    KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
-            KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, 0);
-    sAudioManager.dispatchMediaKeyEvent(upEvent);
-  */
     Log.i(APP_TAG, "Play Pause");
   }
 
@@ -219,18 +207,6 @@ public class HeadsetControlPlusService extends AccessibilityService {
     Intent i = new Intent("com.android.music.musicservicecommand");
     i.putExtra("command", "next");
     sContext.sendBroadcast(i);
-
-    /* OUTDATED approach
-    *-------------------------------------
-    long eventtime = SystemClock.uptimeMillis();
-    KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
-            KeyEvent.KEYCODE_MEDIA_NEXT, 0);
-    sAudioManager.dispatchMediaKeyEvent(downEvent);
-    if (isPlaying) {
-      KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
-              KeyEvent.KEYCODE_MEDIA_PLAY, 0);
-      sAudioManager.dispatchMediaKeyEvent(upEvent);
-    }*/
 
     Log.i(APP_TAG, "Next Track");
   }
@@ -241,18 +217,6 @@ public class HeadsetControlPlusService extends AccessibilityService {
     i.putExtra("command", "previous");
     sContext.sendBroadcast(i);
 
-    /* OUTDATED approach
-    *-------------------------------------
-    long eventtime = SystemClock.uptimeMillis();
-    KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN,
-            KeyEvent.KEYCODE_MEDIA_PREVIOUS, 0);
-    sAudioManager.dispatchMediaKeyEvent(downEvent);
-    if (isPlaying) {
-      KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP,
-              KeyEvent.KEYCODE_MEDIA_PLAY, 0);
-      sAudioManager.dispatchMediaKeyEvent(upEvent);
-    }
-    */
     Log.i(APP_TAG, "Prev Track");
   }
 

@@ -35,7 +35,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
@@ -117,10 +116,11 @@ public class ForegroundService extends Service {
   @Override
   public void onDestroy() {
     unregisterScreenStatusReceiver();
-    if (mMediaPlayer != null) {
-      mMediaPlayer.stop();
+    try {
       mMediaPlayer.reset();
       mMediaPlayer.release();
+    } catch (Exception e) {
+      Log.i(APP_TAG, "Failed to release MediaPlayer");
     }
     mMediaSessionCompat.release();
     if (!ServiceBase.isAccessibilityServiceEnabled(mContext, HeadsetControlPlusService.class)) {
@@ -294,11 +294,6 @@ public class ForegroundService extends Service {
 
       } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
         mIsScreenOn = true;
-        /*
-        if (mMediaPlayer != null) {
-          mMediaPlayer.stop();
-        }
-        */
 
         mMediaSessionCompat.setActive(false);
         if (!ServiceBase.isAccessibilityServiceEnabled(context, HeadsetControlPlusService.class)) {
