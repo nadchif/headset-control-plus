@@ -6,6 +6,7 @@ package com.chif.headsetcontrolplus;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -136,7 +137,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     mPrefForegroundSwitch.getSharedPreferences().edit()
             .putBoolean("enable_hcp_foreground_service", true).commit();
     Intent serviceIntent = new Intent(getActivity(), ForegroundService.class);
-    ContextCompat.startForegroundService(getActivity(), serviceIntent);
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      getActivity().startForegroundService(serviceIntent);
+    } else {
+      getActivity().startService(serviceIntent);
+    }
   }
 
   private void stopService() {
