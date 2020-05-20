@@ -58,8 +58,8 @@ public class ForegroundService extends Service {
   private MediaPlayer mMediaPlayer;
   private ScreenOnOffReceiver mScreenOnOffReceiver;
   private String mGestureMode = "unknown";
-  private Runnable mGestureLongPressed;
   private Runnable mGestureSinglePressed;
+  private Runnable mGestureDoublePressed;
   private Context mContext;
   private PlaybackStateCompat.Builder mStateBuilder;
 
@@ -175,57 +175,52 @@ public class ForegroundService extends Service {
         return false;
       }
 
-      if (keycode != KeyEvent.KEYCODE_HEADSETHOOK && keycode != KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
-        // Not interested in any other key
+      // Not interested in any other key
+      if (ServiceBase.isSupportedKey(keycode)) {
         Log.i(APP_TAG, "Ignored " + keycode);
         return false;
       }
 
       SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
-      // Long Press.
-      if (action == KeyEvent.ACTION_DOWN) {
-        mGestureLongPressed = new Runnable() {
-          public void run() {
-            mGestureMode = "long_press";
-            HeadsetControlPlusService.handleGesture("long");
-            Log.w(APP_TAG, "Executed long press Action");
-          }
-        };
-        // Start tracking long press. If no action up is detected after 950ms,
-        // consider ut as long press.
-        mHandler.postDelayed(mGestureLongPressed, 900);
-      }
-
-
-      // Single and Double Click.
+      // Single, Double, Triple Click.
       if (action == KeyEvent.ACTION_UP) {
         sKeyDownCount++;
-        mHandler.removeCallbacks(mGestureLongPressed);
         mGestureSinglePressed = new Runnable() {
           public void run() {
             // Single press.
             if (sKeyDownCount == 1) {
-              // Check if this keyup event is not following a long press event.
-              if (mGestureMode != "long_press") {
-                HeadsetControlPlusService.handleGesture("single");
-                Log.w(APP_TAG, "Executed single press Action");
-              }
+              sKeyDownCount = 0;
+              HeadsetControlPlusService.handleGesture("single");
+              Log.w(APP_TAG, "Executed single press Action");
               mGestureMode = "unknown";
             }
             // Double press.
             if (sKeyDownCount == 2) {
-              if (mGestureMode != "long_press") {
-                HeadsetControlPlusService.handleGesture("double");
-                Log.w(APP_TAG, "Executed double press Action");
-              }
+              sKeyDownCount = 0;
+              HeadsetControlPlusService.handleGesture("double");
+              Log.w(APP_TAG, "Executed double press Action");
               mGestureMode = "unknown";
             }
-            sKeyDownCount = 0;
+          }
+        };
+        mGestureDoublePressed = new Runnable() {
+          public void run() {
+            // Triple press.
+            if (sKeyDownCount == 3) {
+              sKeyDownCount = 0;
+              HeadsetControlPlusService.handleGesture("triple");
+              Log.w(APP_TAG, "Executed triple press Action");
+              mGestureMode = "unknown";
+            }
           }
         };
         if (sKeyDownCount == 1) {
-          mHandler.postDelayed(mGestureSinglePressed, 400);
+          S_HANDLER.postDelayed(mGestureSinglePressed, 500);
+        }
+        if (sKeyDownCount == 2) {
+          S_HANDLER.removeCallbacks(mGestureSinglePressed);
+          S_HANDLER.postDelayed(mGestureDoublePressed, 400);
         }
       }
     }

@@ -8,9 +8,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 
 public class ServiceBase {
-
   /**
    * Checks if the Accessibility Service is enabled. Returns true if it is
    * @param context - The Context
@@ -40,5 +40,16 @@ public class ServiceBase {
       }
     }
     return false;
+  }
+
+  /**
+   * Checks if the provided keyCode is to be acknowledged as a headset key.
+   * @param keyCode - The keyCode
+   * @return true if the keyCode is headset
+   */
+  public static boolean isSupportedKey(final int keyCode) {
+    return (keyCode != KeyEvent.KEYCODE_HEADSETHOOK
+            && keyCode != KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE
+            && keyCode != KeyEvent.KEYCODE_MEDIA_PLAY);
   }
 }

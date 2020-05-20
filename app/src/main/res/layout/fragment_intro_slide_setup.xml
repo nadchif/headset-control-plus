@@ -6,7 +6,7 @@
     android:background="@color/introPermissions"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="60dp">
+    android:padding="48dp">
 
     <TextView
         android:id="@+id/textView"

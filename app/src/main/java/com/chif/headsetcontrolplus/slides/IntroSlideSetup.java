@@ -59,6 +59,7 @@ public class IntroSlideSetup extends Fragment implements ISlidePolicy {
 
     // This receiver will wait to hear from the accessibility service that,
     // the headset button has worked
+
     getActivity().registerReceiver(mBroadcastReceiver,
             new IntentFilter(getActivity().getPackageName()));
     return view;

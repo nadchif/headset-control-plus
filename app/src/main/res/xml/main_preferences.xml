@@ -40,7 +40,7 @@
             app:entries="@array/pref_media_actions"
             app:entryValues="@array/pref_media_actions"
             app:key="hcp_gestures_single_press"
-            app:summary="@string/pref_button_actions_default"
+            app:summary="@string/pref_button_actions_playpause"
             app:title="@string/pref_button_gestures_single_press"
             app:iconSpaceReserved="false" />
 
@@ -57,9 +57,9 @@
             app:defaultValue="@string/pref_button_actions_previous"
             app:entries="@array/pref_media_actions"
             app:entryValues="@array/pref_media_actions"
-            app:key="hcp_gestures_long_press"
+            app:key="hcp_gestures_triple_press"
             app:summary="@string/pref_button_actions_previous"
-            app:title="@string/pref_button_gestures_long_press"
+            app:title="@string/pref_button_gestures_triple_press"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>

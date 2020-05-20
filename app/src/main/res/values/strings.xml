@@ -78,12 +78,9 @@
     <string name="pref_button_gestures_triple_press">
         Triple Press
     </string>
-    <string name="pref_button_gestures_long_press">
-        Long Press
-    </string>
 
     <!--System Actions-->
-    <string name="pref_button_actions_default">System Default</string>
+    <!-- <string name="pref_button_actions_default">System Default</string> -->
     <string name="pref_button_actions_flashlight_toggle">Flashlight On/Off</string>
     <!--Media Actions-->
     <string name="pref_button_actions_playpause">Play/Pause</string>
@@ -101,7 +98,7 @@
     </string>
     <string name="intro_details_welcome">
         Welcome to Headset Control Plus. Unleash the power of your Headset button by custom mapping gestures like:
-        Long Press, Double Press, Triple Press etc.\n\nThis app does not gather or send any information from your device. For more information view our Privacy Policy.\n\n
+        Double Press, Triple Press etc.\n\nThis app does not gather or send any information from your device. For more information view our Privacy Policy.\n\n
 Camera Permissions are required for flashlight functionality 
     </string>
 
@@ -133,7 +130,7 @@ Camera Permissions are required for flashlight functionality
         Go!!
     </string>
     <string name="intro_details_setup">
-        Awesome! Now let\'s test the setup of your phone and headset (not all phone/headset are supported) 
+        Awesome! Now let\'s test the setup of your phone and headset (not all phone/headset are supported)\n\n
         Connect your headset to the phone and press the headset button to continue, if your setup is supported you will be able to proceed.
     </string>
 
@@ -153,7 +150,7 @@ Camera Permissions are required for flashlight functionality
 
     <!-- Media Actions -->
     <string-array name="pref_media_actions">
-        <item>System Default</item>
+        <!--<item>System Default</item>-->
         <item>Play/Pause</item>
         <item>Next Track</item>
         <item>Previous Track</item>
