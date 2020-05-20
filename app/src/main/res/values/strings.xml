@@ -101,7 +101,8 @@
     </string>
     <string name="intro_details_welcome">
         Welcome to Headset Control Plus. Unleash the power of your Headset button by custom mapping gestures like:
-        Long Press, Double Press, Triple Press etc.\n\nThis app does not gather or send any information from your device. For more information view our Privacy Policy.
+        Long Press, Double Press, Triple Press etc.\n\nThis app does not gather or send any information from your device. For more information view our Privacy Policy.\n\n
+Camera Permissions are required for flashlight functionality 
     </string>
 
     <string name="intro_title_permissions">
