@@ -28,6 +28,7 @@ public class StravaProvider {
   /** Toggle Record.
    * Starts an activity if its not recording.
    * Stops an activity if its already recording.
+   * @todo Catch activity not found exception
    */
   public void toggleRecord() {
     Intent intent = new Intent(Intent.ACTION_RUN);
