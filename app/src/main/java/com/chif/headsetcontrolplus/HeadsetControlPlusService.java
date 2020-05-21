@@ -1,14 +1,14 @@
 /**
  * HeadsetControlPlusService.java
  *
- <p>Copyright 2020 github.com/nadchif
+ * <p>Copyright 2020 github.com/nadchif
  *
- <p>Licensed under the Apache License, Version 2.0 (the "License");
+ * <p>Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- <p>Unless required by applicable law or agreed to in writing, software
+ * <p>Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -36,7 +36,7 @@ import com.chif.headsetcontrolplus.shared.ServiceBase;
 public class HeadsetControlPlusService extends AccessibilityService {
   private static final String APP_TAG = HeadsetControlPlusService.class.getSimpleName();
   private static final Handler S_HANDLER = new Handler();
-  private static int sKeyDownCount = 0;
+  private static int sKeyUpCount = 0;
   private static String sActionsDefault;
   private static String sActionsPlayPause;
   private static String sActionsNext;
@@ -287,12 +287,14 @@ public class HeadsetControlPlusService extends AccessibilityService {
 
     // Determin Single, Double or Click.
     if (action == KeyEvent.ACTION_UP) {
-      sKeyDownCount++;
-      sGestureSinglePressed = new Runnable() {
-        public void run() {
-          // Single press.
-          if (sKeyDownCount == 1) {
-              sKeyDownCount = 0;
+      sKeyUpCount++;
+
+      // Single press.
+      if (sKeyUpCount == 1) {
+        sGestureSinglePressed = new Runnable() {
+          public void run() {
+            if (sKeyUpCount == 1) {
+              sKeyUpCount = 0;
               Log.d(APP_TAG, "Exec Single Press Action");
               if (singlePressAction.equals(sActionsDefault)) {
                 // Simulate the original event.
@@ -300,11 +302,20 @@ public class HeadsetControlPlusService extends AccessibilityService {
               } else {
                 execAction(singlePressAction);
               }
-            mGestureMode = "unknown";
+              mGestureMode = "unknown";
+            }
           }
-          // Double press.
-          if (sKeyDownCount == 2) {
-              sKeyDownCount = 0;
+        };
+        S_HANDLER.postDelayed(sGestureSinglePressed, 500);
+      }
+
+      // Double press.
+      if (sKeyUpCount == 2) {
+        S_HANDLER.removeCallbacks(sGestureSinglePressed);
+        sGestureDoublePressed = new Runnable() {
+          public void run() {
+            if (sKeyUpCount == 2) {
+              sKeyUpCount = 0;
               Log.d(APP_TAG, "Exec Double Press Action");
               if (doublePressAction.equals(sActionsDefault)) {
                 // Simulate the original event.
@@ -312,32 +323,28 @@ public class HeadsetControlPlusService extends AccessibilityService {
               } else {
                 execAction(doublePressAction);
               }
-            mGestureMode = "unknown";
-          }
-        }
-      };
-      sGestureDoublePressed = new Runnable() {
-        public void run() {
-          // Triple press.
-          if (sKeyDownCount == 3) {
-            sKeyDownCount = 0;
-            Log.d(APP_TAG, "Exec Triple Press Action");
-            if (doublePressAction.equals(sActionsDefault)) {
-              // Simulate the original event.
-              simulateTriplePress();
-            } else {
-              execAction(triplePressAction);
+              mGestureMode = "unknown";
             }
-            mGestureMode = "unknown";
+
           }
-        }
-      };
-      if (sKeyDownCount == 1) {
-        S_HANDLER.postDelayed(sGestureSinglePressed, 500);
+        };
+        S_HANDLER.postDelayed(sGestureDoublePressed, 500);
       }
-      if (sKeyDownCount == 2) {
-        S_HANDLER.removeCallbacks(sGestureSinglePressed);
-        S_HANDLER.postDelayed(sGestureDoublePressed, 400);
+
+      // Triple press.
+      if (sKeyUpCount == 3) {
+        S_HANDLER.removeCallbacks(sGestureDoublePressed);
+        if (sKeyUpCount == 3) {
+          sKeyUpCount = 0;
+          Log.d(APP_TAG, "Exec Triple Press Action");
+          if (doublePressAction.equals(sActionsDefault)) {
+            // Simulate the original event.
+            simulateTriplePress();
+          } else {
+            execAction(triplePressAction);
+          }
+          mGestureMode = "unknown";
+        }
       }
     }
     return true;

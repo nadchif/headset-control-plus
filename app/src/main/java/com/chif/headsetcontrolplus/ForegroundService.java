@@ -52,7 +52,7 @@ public class ForegroundService extends Service {
   private static final Handler S_HANDLER = new Handler();
   private static AudioManager sAudioManager;
 
-  private static int sKeyDownCount = 0;
+  private static int sKeyUpCount = 0;
   private final Handler mHandler = new Handler();
   private MediaSessionCompat mMediaSessionCompat;
   private MediaPlayer mMediaPlayer;
@@ -83,9 +83,6 @@ public class ForegroundService extends Service {
     mMediaSessionCompat.setCallback(new MediaSessionCompat.Callback() {
       @Override
       public boolean onMediaButtonEvent(Intent mediaButtonEvent) {
-        if (mScreenOnOffReceiver.isScreenOn()) {
-          return super.onMediaButtonEvent(mediaButtonEvent);
-        }
         return handleMediaButton(mediaButtonEvent);
       }
     });
@@ -185,42 +182,48 @@ public class ForegroundService extends Service {
 
       // Single, Double, Triple Click.
       if (action == KeyEvent.ACTION_UP) {
-        sKeyDownCount++;
-        mGestureSinglePressed = new Runnable() {
-          public void run() {
-            // Single press.
-            if (sKeyDownCount == 1) {
-              sKeyDownCount = 0;
-              HeadsetControlPlusService.handleGesture("single");
-              Log.w(APP_TAG, "Executed single press Action");
-              mGestureMode = "unknown";
+        sKeyUpCount++;
+
+        // Single press.
+        if (sKeyUpCount == 1) {
+          mGestureSinglePressed = new Runnable() {
+            public void run() {
+              if (sKeyUpCount == 1) {
+                sKeyUpCount = 0;
+                HeadsetControlPlusService.handleGesture("single");
+                Log.w(APP_TAG, "Executed single press Action");
+              }
             }
-            // Double press.
-            if (sKeyDownCount == 2) {
-              sKeyDownCount = 0;
-              HeadsetControlPlusService.handleGesture("double");
-              Log.w(APP_TAG, "Executed double press Action");
-              mGestureMode = "unknown";
-            }
-          }
-        };
-        mGestureDoublePressed = new Runnable() {
-          public void run() {
-            // Triple press.
-            if (sKeyDownCount == 3) {
-              sKeyDownCount = 0;
-              HeadsetControlPlusService.handleGesture("triple");
-              Log.w(APP_TAG, "Executed triple press Action");
-              mGestureMode = "unknown";
-            }
-          }
-        };
-        if (sKeyDownCount == 1) {
-          S_HANDLER.postDelayed(mGestureSinglePressed, 500);
+          };
+          S_HANDLER.postDelayed(mGestureSinglePressed, 550);
         }
-        if (sKeyDownCount == 2) {
+
+        // Double press.
+        if (sKeyUpCount == 2) {
           S_HANDLER.removeCallbacks(mGestureSinglePressed);
-          S_HANDLER.postDelayed(mGestureDoublePressed, 400);
+          mGestureDoublePressed = new Runnable() {
+            public void run() {
+              if (sKeyUpCount == 2) {
+                sKeyUpCount = 0;
+                HeadsetControlPlusService.handleGesture("double");
+                Log.w(APP_TAG, "Executed double press Action");
+                mGestureMode = "unknown";
+              }
+
+            }
+          };
+          S_HANDLER.postDelayed(mGestureDoublePressed, 500);
+        }
+
+        // Triple press.
+        if (sKeyUpCount == 3) {
+          S_HANDLER.removeCallbacks(mGestureDoublePressed);
+          if (sKeyUpCount == 3) {
+            sKeyUpCount = 0;
+            HeadsetControlPlusService.handleGesture("triple");
+            Log.w(APP_TAG, "Executed triple press Action");
+            mGestureMode = "unknown";
+          }
         }
       }
     }
@@ -275,9 +278,6 @@ public class ForegroundService extends Service {
         mMediaSessionCompat.setCallback(new MediaSessionCompat.Callback() {
           @Override
           public boolean onMediaButtonEvent(final Intent mediaButtonEvent) {
-            if (mScreenOnOffReceiver.isScreenOn()) {
-              return super.onMediaButtonEvent(mediaButtonEvent);
-            }
             return handleMediaButton(mediaButtonEvent);
           }
         });

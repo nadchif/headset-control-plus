@@ -12,6 +12,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,9 @@ import com.github.paolorotolo.appintro.ISlidePolicy;
 public class IntroSlideSetup extends Fragment implements ISlidePolicy {
 
   private static final String APP_TAG = "HeadsetControlPlus";
+  private static final Handler S_HANDLER = new Handler();
   private static final String DOCS_TROUBLESHOOT_MD = "https://github.com/nadchif/headset-control-plus/blob/master/docs/TROUBLESHOOT.md";
+  private static Runnable sShowHavingTrouble;
   private Button mStatusMessageBtn;
   private boolean mSignalReceived = false;
   private BroadcastReceiver mBroadcastReceiver;
@@ -54,20 +58,41 @@ public class IntroSlideSetup extends Fragment implements ISlidePolicy {
         editor.apply();
         // Unregister the broadcast receiver after first successful reception
         getActivity().unregisterReceiver(mBroadcastReceiver);
+        // Cancel the Having Trouble runnable
+        S_HANDLER.removeCallbacks(sShowHavingTrouble);
       }
     };
 
+
     // This receiver will wait to hear from the accessibility service that,
     // the headset button has worked
-
     getActivity().registerReceiver(mBroadcastReceiver,
             new IntentFilter(getActivity().getPackageName()));
+
+    // Show a having trouble? message after 30 seconds
+    sShowHavingTrouble = new Runnable() {
+      public void run() {
+        Log.e(APP_TAG, "Ran Having tTrouble");
+        if (!mSignalReceived) {
+          mStatusMessageBtn.setText(R.string.status_headset_setup_trouble);
+        }
+      }
+    };
+    S_HANDLER.postDelayed(sShowHavingTrouble, 25000);
+
     return view;
   }
 
   @Override
   public void onDestroyView() {
     super.onDestroyView();
+    try {
+      // in case user is closing app
+      getActivity().unregisterReceiver(mBroadcastReceiver);
+      S_HANDLER.removeCallbacks(sShowHavingTrouble);
+    } catch (Exception ex) {
+      Log.e(APP_TAG, ex.getMessage());
+    }
   }
 
   @Override

@@ -130,8 +130,8 @@
         Go!!
     </string>
     <string name="intro_details_setup">
-        Awesome! Now let\'s test the setup of your phone and headset (not all phone/headset are supported)\n\n
-        Connect your headset to the phone and press the headset button to continue, if your setup is supported you will be able to proceed.
+        Awesome! Now let\'s test the setup of your phone and headset (not all phone/headset are supported)
+        \n\nConnect your headset to the phone and press the headset button to continue, if your setup is supported you will be able to proceed.
     </string>
 
     <!--Arrays-->
