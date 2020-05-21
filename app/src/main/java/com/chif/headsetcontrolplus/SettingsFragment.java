@@ -77,7 +77,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
   public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
     setPreferencesFromResource(R.xml.main_preferences, rootKey);
     bindPreferenceSummaryToValue(findPreference("hcp_mode"));
-    bindPreferenceSummaryToValue(findPreference("hcp_gestures_long_press"));
+    bindPreferenceSummaryToValue(findPreference("hcp_gestures_triple_press"));
     bindPreferenceSummaryToValue(findPreference("hcp_gestures_single_press"));
     bindPreferenceSummaryToValue(findPreference("hcp_gestures_double_press"));
     mPrefForegroundSwitch = findPreference("enable_hcp_foreground_service");

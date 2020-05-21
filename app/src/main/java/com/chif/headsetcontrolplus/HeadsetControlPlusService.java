@@ -1,19 +1,18 @@
 /**
  * HeadsetControlPlusService.java
  *
- <p>Copyright 2020 github.com/nadchif
+ * <p>Copyright 2020 github.com/nadchif
  *
- <p>Licensed under the Apache License, Version 2.0 (the "License");
+ * <p>Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- <p>Unless required by applicable law or agreed to in writing, software
+ * <p>Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * @todo replace long press functionality with triple press
  */
 
 
@@ -32,11 +31,12 @@ import android.view.accessibility.AccessibilityEvent;
 import androidx.preference.PreferenceManager;
 import com.chif.headsetcontrolplus.providers.FlashlightProvider;
 import com.chif.headsetcontrolplus.providers.StravaProvider;
+import com.chif.headsetcontrolplus.shared.ServiceBase;
 
 public class HeadsetControlPlusService extends AccessibilityService {
   private static final String APP_TAG = HeadsetControlPlusService.class.getSimpleName();
   private static final Handler S_HANDLER = new Handler();
-  private static int sKeyDownCount = 0;
+  private static int sKeyUpCount = 0;
   private static String sActionsDefault;
   private static String sActionsPlayPause;
   private static String sActionsNext;
@@ -51,8 +51,8 @@ public class HeadsetControlPlusService extends AccessibilityService {
   private static SharedPreferences pref;
   private static String mGestureMode = "unknown";
   private static boolean sIsSimulation = false;
-  private static Runnable sGestureLongPressed;
   private static Runnable sGestureSinglePressed;
+  private static Runnable sGestureDoublePressed;
   private static FlashlightProvider sFlashlightProvider;
   private static StravaProvider sStravaProvider;
   private static Context sContext;
@@ -95,7 +95,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
 
   /**
    * Handles gestures that were polled during screen off.
-   * @param gesture - Accepts "single", "double", and "long"
+   * @param gesture - Accepts "single", "double", and "triple"
    */
   public static void handleGesture(final String gesture) {
 
@@ -103,14 +103,14 @@ public class HeadsetControlPlusService extends AccessibilityService {
             sActionsPlayPause);
     final String doublePressAction = pref.getString("hcp_gestures_double_press",
             sActionsNext);
-    final String longPressAction = pref.getString("hcp_gestures_long_press",
+    final String triplePressAction = pref.getString("hcp_gestures_triple_press",
             sActionsPrevious);
     if (gesture == "single") {
       execAction(singlePressAction);
     } else if (gesture == "double") {
       execAction(doublePressAction);
-    } else if (gesture == "long") {
-      execAction(doublePressAction);
+    } else if (gesture == "triple") {
+      execAction(triplePressAction);
     }
   }
 
@@ -170,28 +170,14 @@ public class HeadsetControlPlusService extends AccessibilityService {
   }
 
   /**
-   * Simulates a long press of the headset button. This is necessary for cases where after
-   * catching the initial long press event and it is assigned to do default, you have to
+   * Simulates triple press of the headset button. This is necessary for cases where after
+   * catching the initial triple press event and it is assigned to do default, you have to
    * re-stage it with the sIsSimulation set to true, to allow the event to go through this service
    * uninterrupted.
+   * @todo write Triple Press Simulation function
    */
-  private static void simulateLongPress() {
-    sIsSimulation = true; // Set to true each time, to allow it go through and be handled by system.
+  private static void simulateTriplePress() {
 
-    sAudioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,
-            KeyEvent.KEYCODE_HEADSETHOOK));
-    sGestureLongPressed = new Runnable() {
-      public void run() {
-        sAudioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,
-                KeyEvent.KEYCODE_HEADSETHOOK));
-      }
-    };
-    // Schedule keyup event after longpress timeout.
-
-    //ideally use ViewConfiguration.get(this).getLongPressTimeout(), but for now will set 1000
-    S_HANDLER.postDelayed(sGestureLongPressed, 1000);
-
-    Log.i(APP_TAG, "hcp simulated long press");
   }
 
   /* Broadcast a togglepause intent */
@@ -242,7 +228,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
   @Override
   protected void onServiceConnected() {
     sAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-    sActionsDefault = getString(R.string.pref_button_actions_default);
+    // sActionsDefault = getString(R.string.pref_button_actions_default);
     sActionsPlayPause = getString(R.string.pref_button_actions_playpause);
     sActionsNext = getString(R.string.pref_button_actions_next);
     sActionsPrevious = getString(R.string.pref_button_actions_previous);
@@ -272,9 +258,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
       return false;
     }
 
-    if (keycode != KeyEvent.KEYCODE_HEADSETHOOK
-        && keycode != KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE
-        && keycode != KeyEvent.KEYCODE_MEDIA_PLAY) {
+    if (ServiceBase.isSupportedKey(keycode)) {
       // Not interested in any other keys
       Log.i(APP_TAG, "Ignored " + keycode);
       return false;
@@ -290,6 +274,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
 
     Log.d(APP_TAG, ("Broadcast Key " + keycode));
     Intent intent = new Intent(getPackageName());
+    intent.putExtra("pressed", keycode);
     sendBroadcast(intent);
 
 
@@ -297,65 +282,69 @@ public class HeadsetControlPlusService extends AccessibilityService {
             sActionsPlayPause);
     final String doublePressAction = pref.getString("hcp_gestures_double_press",
             sActionsNext);
-    final String longPressAction = pref.getString("hcp_gestures_long_press",
+    final String triplePressAction = pref.getString("hcp_gestures_triple_press",
             sActionsPrevious);
 
-    // Long Press.
-    if (action == KeyEvent.ACTION_DOWN) {
-      sGestureLongPressed = new Runnable() {
-        public void run() {
-          mGestureMode = "long_press";
-          Log.i(APP_TAG, "Exec Long Press Action");
-          if (longPressAction.equals(sActionsDefault)) {
-            simulateLongPress();
-          } else {
-            execAction(longPressAction);
-          }
-        }
-      };
-      // Start tracking long press. If no action up is detected after 1100ms,
-      // consider ut as long press.
-      S_HANDLER.postDelayed(sGestureLongPressed, 1100);
-    }
-
-    // Single and Double Click.
+    // Determin Single, Double or Click.
     if (action == KeyEvent.ACTION_UP) {
-      sKeyDownCount++;
-      S_HANDLER.removeCallbacks(sGestureLongPressed);
-      sGestureSinglePressed = new Runnable() {
-        public void run() {
-          // Single press.
-          if (sKeyDownCount == 1) {
-            // Check if this keyup event is not following a long press event.
-            if (mGestureMode != "long_press") {
-              Log.i(APP_TAG, "Exec Single Press Action");
+      sKeyUpCount++;
+
+      // Single press.
+      if (sKeyUpCount == 1) {
+        sGestureSinglePressed = new Runnable() {
+          public void run() {
+            if (sKeyUpCount == 1) {
+              sKeyUpCount = 0;
+              Log.d(APP_TAG, "Exec Single Press Action");
               if (singlePressAction.equals(sActionsDefault)) {
                 // Simulate the original event.
                 simulateSinglePress();
               } else {
                 execAction(singlePressAction);
               }
+              mGestureMode = "unknown";
             }
-            mGestureMode = "unknown";
           }
-          // Double press.
-          if (sKeyDownCount == 2) {
-            if (mGestureMode != "long_press") {
-              Log.i(APP_TAG, "Exec Double Press Action");
+        };
+        S_HANDLER.postDelayed(sGestureSinglePressed, 500);
+      }
+
+      // Double press.
+      if (sKeyUpCount == 2) {
+        S_HANDLER.removeCallbacks(sGestureSinglePressed);
+        sGestureDoublePressed = new Runnable() {
+          public void run() {
+            if (sKeyUpCount == 2) {
+              sKeyUpCount = 0;
+              Log.d(APP_TAG, "Exec Double Press Action");
               if (doublePressAction.equals(sActionsDefault)) {
                 // Simulate the original event.
                 simulateDoublePress();
               } else {
                 execAction(doublePressAction);
               }
+              mGestureMode = "unknown";
             }
-            mGestureMode = "unknown";
+
           }
-          sKeyDownCount = 0;
+        };
+        S_HANDLER.postDelayed(sGestureDoublePressed, 500);
+      }
+
+      // Triple press.
+      if (sKeyUpCount == 3) {
+        S_HANDLER.removeCallbacks(sGestureDoublePressed);
+        if (sKeyUpCount == 3) {
+          sKeyUpCount = 0;
+          Log.d(APP_TAG, "Exec Triple Press Action");
+          if (doublePressAction.equals(sActionsDefault)) {
+            // Simulate the original event.
+            simulateTriplePress();
+          } else {
+            execAction(triplePressAction);
+          }
+          mGestureMode = "unknown";
         }
-      };
-      if (sKeyDownCount == 1) {
-        S_HANDLER.postDelayed(sGestureSinglePressed, 400);
       }
     }
     return true;
