@@ -123,7 +123,7 @@
     <string name="status_headset_setup_waiting">
         Waiting...</string>
     <string name="status_headset_setup_trouble">
-        Having Trouble? Tap here for Help</string>
+        Having Trouble? Try to restart your phone, or Tap here for Help</string>
     <string name="status_headset_setup_success">
         Success! Enjoy Headset Control Plus</string>
 
