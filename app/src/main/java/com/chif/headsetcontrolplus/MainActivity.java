@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements
     if (!sp.getBoolean("first", false)) {
       Intent intent = new Intent(this, IntroActivity.class);
       startActivity(intent);
+      finish();
     }
 
     getSupportFragmentManager().addOnBackStackChangedListener(

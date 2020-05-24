@@ -28,6 +28,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.Toast;
 import androidx.preference.PreferenceManager;
 import com.chif.headsetcontrolplus.providers.FlashlightProvider;
 import com.chif.headsetcontrolplus.providers.StravaProvider;
@@ -253,6 +254,11 @@ public class HeadsetControlPlusService extends AccessibilityService {
   public boolean onKeyEvent(final KeyEvent event) {
     int keycode = event.getKeyCode();
     int action = event.getAction();
+
+    /*
+     Toast.makeText(this, ("Headset Key:" + keycode + " Action: " + action),
+            Toast.LENGTH_SHORT).show();
+     */
 
     if (action != KeyEvent.ACTION_UP && action != KeyEvent.ACTION_DOWN || event.isCanceled()) {
       return false;
