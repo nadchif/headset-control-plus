@@ -107,7 +107,8 @@
     </string>
     <string name="intro_details_permissions">
         In order for the app to work, It needs your permission to run an as Accesibility service.
-        Please click "Open Accessibility", locate "Headset Control Plus" and enable the service.
+        Please click "Open Accessibility", locate "Headset Control Plus" and enable the service.\n\nAfter
+        that, start Headset Control Plus to complete the setup
     </string>
     <string name="btn_open_accessibility">
         Open Accessibility</string>
