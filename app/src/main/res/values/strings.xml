@@ -107,7 +107,8 @@
     </string>
     <string name="intro_details_permissions">
         In order for the app to work, It needs your permission to run an as Accesibility service.
-        Please click "Open Accessibility", locate "Headset Control Plus" and enable the service.
+        Please click "Open Accessibility", locate "Headset Control Plus" and enable the service.\n\nAfter
+        that, start Headset Control Plus to complete the setup
     </string>
     <string name="btn_open_accessibility">
         Open Accessibility</string>
@@ -122,7 +123,7 @@
     <string name="status_headset_setup_waiting">
         Waiting...</string>
     <string name="status_headset_setup_trouble">
-        Having Trouble? Tap here for Help</string>
+        Having Trouble? Try to restart your phone, or Tap here for Help</string>
     <string name="status_headset_setup_success">
         Success! Enjoy Headset Control Plus</string>
 

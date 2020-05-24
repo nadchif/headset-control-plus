@@ -77,6 +77,7 @@ public class IntroSlidePermissions extends Fragment implements ISlidePolicy {
       public void onClick(final View view) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
         startActivity(intent);
+        getActivity().finish();
       }
     });
 
