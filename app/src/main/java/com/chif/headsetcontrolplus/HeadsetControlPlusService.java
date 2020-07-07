@@ -28,8 +28,8 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
-import android.widget.Toast;
 import androidx.preference.PreferenceManager;
+import com.chif.headsetcontrolplus.providers.CameraProvider;
 import com.chif.headsetcontrolplus.providers.FlashlightProvider;
 import com.chif.headsetcontrolplus.providers.StravaProvider;
 import com.chif.headsetcontrolplus.shared.ServiceBase;
@@ -47,6 +47,8 @@ public class HeadsetControlPlusService extends AccessibilityService {
   private static String sActionsVolumeMute;
   private static String sActionsFlashlightToggle;
   private static String sActionsStravaToggle;
+  private static String sActionsOpenCamera;
+  private static String sActionsTakePhoto;
   private static AudioManager sAudioManager;
   private static boolean isPlaying = false;
   private static SharedPreferences pref;
@@ -56,6 +58,7 @@ public class HeadsetControlPlusService extends AccessibilityService {
   private static Runnable sGestureDoublePressed;
   private static FlashlightProvider sFlashlightProvider;
   private static StravaProvider sStravaProvider;
+  private static CameraProvider sCameraProvider;
   private static Context sContext;
 
   private static void execAction(final String action) {
@@ -90,6 +93,14 @@ public class HeadsetControlPlusService extends AccessibilityService {
     }
     if (action.equals(sActionsStravaToggle)) {
       sStravaProvider.toggleRecord();
+      return;
+    }
+    if (action.equals(sActionsOpenCamera)) {
+      openCamera();
+      return;
+    }
+    if (action.equals(sActionsTakePhoto)) {
+      takePhoto();
       return;
     }
   }
@@ -226,6 +237,24 @@ public class HeadsetControlPlusService extends AccessibilityService {
     Log.i(APP_TAG, "Mut Vol");
   }
 
+  private static void takePhoto() {
+    // start an activity for the camera
+    Intent i = new Intent(sContext, CameraProvider.class);
+    i.putExtra("action", "take_photo");
+    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    sContext.startActivity(i);
+    Log.i(APP_TAG, "Take Photo");
+  }
+
+  private static void openCamera() {
+    // start an activity for the camera
+    Intent i = new Intent(sContext, CameraProvider.class);
+    i.putExtra("action", "open_camera");
+    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    sContext.startActivity(i);
+    Log.i(APP_TAG, "Open Camera");
+  }
+
   @Override
   protected void onServiceConnected() {
     sAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -238,6 +267,8 @@ public class HeadsetControlPlusService extends AccessibilityService {
     sActionsVolumeMute = getString(R.string.pref_button_actions_volume_mute);
     sActionsFlashlightToggle = getString(R.string.pref_button_actions_flashlight_toggle);
     sActionsStravaToggle = getString(R.string.pref_button_actions_strava_toggle);
+    sActionsOpenCamera = getString(R.string.pref_button_actions_open_camera);
+    sActionsTakePhoto = getString(R.string.pref_button_actions_take_photo);
     sFlashlightProvider = new FlashlightProvider(this);
     sStravaProvider = new StravaProvider(this);
     sContext = this;

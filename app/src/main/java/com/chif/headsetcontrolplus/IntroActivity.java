@@ -35,6 +35,7 @@ public class IntroActivity extends AppIntro2 {
     // Ask for permissions
     askForPermissions(new String[]{
         Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.FOREGROUND_SERVICE,
         Manifest.permission.WAKE_LOCK}, 1);
 
