@@ -82,6 +82,8 @@
     <!--System Actions-->
     <!-- <string name="pref_button_actions_default">System Default</string> -->
     <string name="pref_button_actions_flashlight_toggle">Flashlight On/Off</string>
+    <string name="pref_button_actions_open_camera">Open Camera</string>
+    <string name="pref_button_actions_take_photo">Take a Photo</string>
     <!--Media Actions-->
     <string name="pref_button_actions_playpause">Play/Pause</string>
     <string name="pref_button_actions_next">Next Track</string>
@@ -160,6 +162,10 @@
         <item>Volume Mute</item>
         <item>Flashlight On/Off</item>
         <item>Strava Start/Stop</item>
+        <item>Open Camera</item>
+        <item>Take a Photo</item>
     </string-array>
 
+    <!-- CameraProvider Message  -->
+    <string name="image_saved">Image Saved</string>
 </resources>
